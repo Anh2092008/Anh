@@ -1054,7 +1054,7 @@ def main():
 							print('Hết Nhiệm Vụ Group                                 ', end = '\r');sleep(2); print('                                                        ', end = '\r')
 							listgroup = 0
 						else:
-							print(f'\033[1;34mThấy {len(listgroup)} Nhiệm Vụ Group           ', end = '\r')
+							print(f'\033[1;34mThấy {len(listgroup)} Nhiệm Vụ Group           ', end = '\r');sleep(0.1); print('                                                        ', end = '\r')
 						
 							for x in listgroup:
 								id = x['id']
