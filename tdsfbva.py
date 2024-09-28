@@ -448,7 +448,7 @@ def main():
 			print('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩\033[1;34m Nhập \033[1;34m[\033[1;35m2\033[1;34m]\033[1;34m Nhập Cookie Facebook Mới\n\n')
 			chon = input('\033[1;96m┌─[\033[1;105;90mVui Lòng Chọn Chế Độ !!\033[0m\033[1;34m]\n└──╼ \033[1;96m❯\033[1;95m❯\033[1;94m❯\033[1;33m ')
 			if chon == '1':
-				print('\033[1;35mĐang Lấy Dữ Liệu Đã Lưu');sleep(1)
+				print('\033[1;35mĐang Lấy Cooki cũ Đã Lưu');sleep(1)
 				with open('Cookie_FB.txt', 'r') as f:
 					list_cookie = json.loads(f.read())
 					break
