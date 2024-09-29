@@ -385,13 +385,13 @@ def Nhap_Cookie():
 		name = fb.get_thongtin()
 		if name != 0:
 			ten = name[0]
-			print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+			print('\033[1;35m─────────────────────────────────────────────────────────────')
 			print(f'\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩\033[1;32mTên Facebook: {ten}')
 			list_cookie.append(cookie)
-			print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+			print('\033[1;35m─────────────────────────────────────────────────────────────')
 		else:
 			print('Cookie Facebook Die ! Vui Lòng Nhập Lại !!!')
-			print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+			print('\033[1;35m─────────────────────────────────────────────────────────────')
 			i-=1
 	return list_cookie
 def chongblock(delaybl):
@@ -421,7 +421,7 @@ def main():
 				elif chon == '1':
 					pass
 				else:
-					print('Lựa chọn không xác định !!!');print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+					print('Lựa chọn không xác định !!!');print('\033[1;35m─────────────────────────────────────────────────────────────')
 					continue 
 			except:
 				os.remove('configtds.txt')
@@ -459,9 +459,9 @@ def main():
 					list_cookie = json.loads(f.read())
 					break
 			elif chon == '2':
-				os.remove('Cookie_FB.txt'); print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+				os.remove('Cookie_FB.txt'); print('\033[1;35m─────────────────────────────────────────────────────────────')
 			else:
-				print('\033[1;35mLựa Chọn Không Xác Định.'); print('\033[1;35m──────────────────────────────────────────────────────────────────────'); continue
+				print('\033[1;35mLựa Chọn Không Xác Định.'); print('\033[1;35m─────────────────────────────────────────────────────────────'); continue
 		if not os.path.exists('Cookie_FB.txt'):
 			list_cookie = Nhap_Cookie()
 			with open('Cookie_FB.txt', 'w') as f:
@@ -472,12 +472,15 @@ def main():
 	print(f'\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;32mXu Hiện Tại: {tim}'+str(format(int(xu), ',')))
 	print(f'\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;32mXu Bị Phạt: {red}{xudie} ')
 	print(f'\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;32mSố Cookie: {tim}{len(list_cookie)} ')
-	print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+	print('\033[1;35m─────────────────────────────────────────────────────────────')
 	print('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m1\033[1;34m] : \033[1;35mNhiệm Vụ Like\n\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m2\033[1;34m] : \033[1;35mNhiệm Vụ COMMENT\n\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m3\033[1;34m] : \033[1;35mNhiệm Vụ Chia Sẻ\n\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m4\033[1;34m] : \033[1;35mNhiệm Vụ Thả Cảm Xúc')
 	print('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m5\033[1;34m] : \033[1;35mNhiệm Vụ Theo Dõi\n\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m6\033[1;34m] : \033[1;35mNhiệm Vụ PAGE\n\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m7\033[1;34m] : \033[1;35mNhiệm Vụ Comment CX\n\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34m[\033[1;35m8\033[1;34m] : \033[1;35mNhiệm Vụ Tham Gia Nhóm')
-	print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+	print('\033[1;35m─────────────────────────────────────────────────────────────')
 	print('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mCó Thể Chọn Nhiều Nhiệm Vụ \033[1;34(\033[1;35mVí Dụ 123...\033[1;34)\n')
 	nhiemvu = input ('\033[1;96m┌─[\033[1;105;90mVui Lòng Chọn Chế Độ !!\033[0m\033[1;34m]\n└──╼ \033[1;96m❯\033[1;95m❯\033[1;94m❯\033[1;33m ')
+	os.system("cls" if os.name == "nt" else "clear")
+	banner()
+	print('\033[1;35m─────────────────────────────────────────────────────────────')
 	delaymin = int(input('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mNhập Delay Min:\033[1;35m '))
 	delaymax = int(input('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mNhập Delay Max:\033[1;35m '))
 	print('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mSau\033[1;35m ____ \033[1;34mNhiệm Vụ Thì Kích Hoạt Chống Block',end='\r')
@@ -485,7 +488,7 @@ def main():
 	print(f'\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mSau {nvblock} Nhiệm Vụ Nghỉ Ngơi \033[1;35m____ \033[1;34mGiây       ',end='\r')
 	delaybl = int(input(f'\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mSau {nvblock} Nhiệm Vụ Nghỉ Ngơi\033[1;35m '))
 	doinick = int(input('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ \033[1;34mSau Bao Nhiêu Nhiệm Vụ Thì Đổi Nick:\033[1;35m '))
-	print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+	print('\033[1;35m─────────────────────────────────────────────────────────────')
 			
 	while True:
 		if len(list_cookie) == 0:
@@ -508,13 +511,13 @@ def main():
 			cau_hinh = tds.run(id)
 			if cau_hinh == True:
 				os.system("cls" if os.name == "nt" else "clear")
-				print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+				print('\033[1;35m─────────────────────────────────────────────────────────────')
 				
-				print(f'\033[1;34mĐang Cấu Hình ID FB: \x1b[38;5;46m{id} {tim}| \033[1;34mTên FB:\x1b[38;5;46m {ten}')
-				print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+				print(f'\033[1;34mID FB: \x1b[38;5;46m{id} {tim}| \033[1;34mTên FB:\x1b[38;5;46m {ten}')
+				print('\033[1;35m─────────────────────────────────────────────────────────────')
 			else:
 				
-				print(f'Cấu Hình Thất Bại ID FB: \x1b[38;5;46m{id} | Tên FB: \x1b[38;5;46m{ten} ', end = '\r')
+				print(f' ID FB: \x1b[38;5;46m{id} | Tên FB: \x1b[38;5;46m{ten} ', end = '\r')
 				continue
 			ntool = 0
 			while True:
@@ -565,7 +568,7 @@ def main():
 										hoanthanh(dem, id, 'LIKE', msg, xu)
 										loilike = 0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {xu} | Số Tài Khoản Facebook {len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {xu} | Số Tài Khoản Facebook {len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -621,7 +624,7 @@ def main():
 										hoanthanh(dem, id, 'LIKE 2', msg, xu)
 										loilike=0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {xu} | Số Tài Khoản Facebook {len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {xu} | Số Tài Khoản Facebook {len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -677,7 +680,7 @@ def main():
 										hoanthanh(dem, id, 'LIKE 3', msg, xu)
 										loilike=0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {xu} | Số Tài Khoản Facebook {len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {xu} | Số Tài Khoản Facebook {len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -733,7 +736,7 @@ def main():
 										hoanthanh(dem, id, 'COMMENT', msg, xu)
 										loicmt=0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {vang}{xu} | Số Tài Khoản Facebook{vang} {len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {vang}{xu} | Số Tài Khoản Facebook{vang} {len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -788,7 +791,7 @@ def main():
 										hoanthanh(dem, id, 'SHARE', msg, xu)
 										loishare = 0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại:{vang} {xu} | Số Tài Khoản Facebook {vang}{len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại:{vang} {xu} | Số Tài Khoản Facebook {vang}{len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -845,7 +848,7 @@ def main():
 										hoanthanh(dem, id, type, msg, xu)
 										loilike = 0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại:{vang} {xu} | Số Tài Khoản Facebook {vang}{len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại:{vang} {xu} | Số Tài Khoản Facebook {vang}{len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -904,7 +907,7 @@ def main():
 										hoanthanh(dem, id, 'FOLLOW', msg, xu)
 										loifollow=0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại:{vang} {xu} | Số Tài Khoản Facebook{vang} {len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại:{vang} {xu} | Số Tài Khoản Facebook{vang} {len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -961,7 +964,7 @@ def main():
 										hoanthanh(dem, id, 'PAGE', msg, xu)
 										loipage = 0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {vang}{xu} | Số Tài Khoản Facebook {vang}{len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {vang}{xu} | Số Tài Khoản Facebook {vang}{len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
@@ -1020,7 +1023,7 @@ def main():
 										hoanthanh(dem, id, type+'CMT', msg, xu)
 										loicxcmt=0
 										if dem % doinick == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {vang}{xu} | Số Tài Khoản Facebook{vang} {len(list_cookie)}'); print('\033[1;35m──────────────────────────────────────────────────────────────────'); ntool = 1; break
+											print('\033[1;35m─────────────────────────────────────────────────────────────'); print(f'Số Xu Hiện Tại: {vang}{xu} | Số Tài Khoản Facebook{vang} {len(list_cookie)}'); print('\033[1;35m─────────────────────────────────────────────────────────────'); ntool = 1; break
 										if dem % nvblock == 0:
 											chongblock(delaybl)
 										else:
