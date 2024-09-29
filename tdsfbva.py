@@ -361,7 +361,7 @@ def hoanthanh(dem, id, type, msg, xu):
 	print('\033[1;35m╔═══════════════════════════')		      	
 	print(f'\033[1;35m║\033[1;34m\033[1;35m {dem}\033[1;34m\n\033[1;35m║ \033[1;97m[\033[1;91m❣\033[1;97m] TG : {v} {time} {e}\n\033[1;35m║ \033[1;97m[\033[1;91m❣\033[1;97m] ID : {f} {uid} {e}\n\033[1;35m║ \033[1;97m[\033[1;91m❣\033[1;97m] Xu : {a} {msg} {e}\n\033[1;35m║ \033[1;97m[\033[1;91m❣\033[1;97m] NV : {k} {type} {e}')
 	print('\033[1;35m╚═══════════════════════════')
-	print(f'     XHT : {d} {xu}{e}{v} Xu {e}')
+	print(f'   \033[1;97m  XHT : {d} {xu}{e}{v} Xu {e}')
 		 
 def error(id, type):
 	time=datetime.now().strftime("%H:%M:%S")
