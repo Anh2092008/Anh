@@ -35,9 +35,14 @@ total = 0
 may = 'mb' if platform[0:3] == 'lin' else 'pc'
 def banner():
  os.system("cls" if os.name == "nt" else "clear")
- banner = f"""   
-                   \033[7;37m\033[1;36m Tool Được Viết Bởi thầy Ông nội\033[0m \n                   \033[7;37m\033[1;34mThầy Nhớ Diễm My Quá Con Ơi  \033[0m    \n\n\033[7;37m\033[1;34m═ \033[1;35m ═  \033[1;34m═ \033[1;35m ═ \033[1;34m ═ \033[1;35m ═\033[1;34m  ═ \033[1;35m ═ \033[1;34m ═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═\033[1;35m  ═  \033[1;34m═  \033[1;35m═\033[1;34m═ \033[1;35m ═ \033[1;34m ═ \033[1;35m ═\033[1;34m  ═ \033[1;35m ═ \033[1;34m ═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═\033[1;35m  ═  \033[1;34m═  \033[1;35m═\033[1;34m═ \033[1;35m ═ \033[1;34m ═ \033[1;35m ═\033[1;34m  ═ \033[1;35m ═ \033[1;34m ═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═\033[1;35m  ═  \033[1;34m═  \033[1;35m═\033[1;34m═ \033[1;35m ═ \033[1;34m ═ \033[1;35m ═\033[1;34m  ═ \033[1;35m ═ \033[1;34m ═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═\033[1;35m  ═  \033[1;34m═  \033[1;35m═\033[1;34m═ \033[1;35m ═ \033[1;34m ═ \033[1;35m ═ \033[1;34m ═ \033[1;35m ═ \033[1;34m ═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═  \033[1;35m═  \033[1;34m═ \033[1;35m  ═  \033[1;34m═ \033[1;35m ═ \033[1;34m═  \033[1;35m═  \033[1;34m═ \033[1;35m  ═  \033[1;34m═ \033[1;35m  ═ \033[1;34m ═ \033[0m
-                                                    \n
+ banner = f"""\033[1;31m    
+                      ███╗   ██╗██╗   ██╗ █████╗ 
+                      ████╗  ██║██║   ██║██╔══██╗
+                      ██╔██╗ ██║██║   ██║███████║
+                      \033[1;37m██║╚██╗██║╚██╗ ██╔╝██╔══██║
+                      ██║ ╚████║ ╚████╔╝ ██║  ██║
+                      ╚═╝  ╚═══╝  ╚═══╝  ╚═╝  ╚═╝                                  
+\n
 """
 
  for X in banner: 	
@@ -99,7 +104,7 @@ class TraoDoiSub_Api (object):
 				xuthem = nhan.json()['data']['xu_them']
 				global total
 				total+=xuthem
-				print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+				print('\033[1;35m─────────────────────────────────────────────────────────────')
 				print(f'{lam}Nhận Thành Công{tim} {job} {lam}Nhiệm Vụ {tim}| {luc}{msg} {tim}| {luc} Bú {vang}{total} {luc}Xu {tim}| {vang}{xu} Xu')
 				
 				if job == 0:
@@ -139,20 +144,20 @@ def main():
 			tds = TraoDoiSub_Api(token)
 			data = tds.main()
 			try:
-				print(f'{anh}{luc}Nhập {lamd}[{tim}1{lamd}] {luc}Giữ Lại Tài Khoản \033[1;105;90m'+ data['user'] )
-				print(f'\033[0m{anh}{luc}Nhập {lamd}[{tim}2{lamd}] {luc}Nhập Access_Token TDS Mới')
-				chon = input(f'{anh}{luc}Nhập {tim}=={lamd}>{vang}: {tim}')
+				print(f'{anh}{lamd}Nhập {lamd}[{tim}1{lamd}] {lamd}Giữ Lại Tài Khoản \033[1;105;90m'+ data['user'] )
+				print(f'\033[0m{anh}{lamd}Nhập {lamd}[{tim}2{lamd}] {lamd}Nhập Access_Token TDS Mới')
+				chon = input(f'{anh}{lamd}Nhập {tim}=={lamd}>{vang}: {tim}')
 				if chon == '2':
 					os.remove('configtds.txt')
 				elif chon == '1':
 					pass
 				else:
-					print(red+'Lựa chọn không xác định !!!');print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+					print(red+'Lựa chọn không xác định !!!');print('\033[1;35m─────────────────────────────────────────────────────────────')
 					continue 
 			except:
 				os.remove('configtds.txt')
 		if not os.path.exists('configtds.txt'):
-			token = input(f'{anh}{luc}Nhập Access_Token TDS: {vang}')
+			token = input(f'{anh}{lamd}Nhập Access_Token TDS: {tim}')
 			with open('configtds.txt', 'w') as f:
 				f.write(token)
 		with open('configtds.txt', 'r') as f:
@@ -169,7 +174,7 @@ def main():
 			print(red+'Access Token Không Hợp Lệ! Xin Thử Lại ')
 			os.remove('configtds.txt')
 			continue 
-	print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+	print('\033[1;35m─────────────────────────────────────────────────────────────')
 	
 		
 
@@ -179,32 +184,33 @@ def main():
 	print(f'{anh} {luc}Xu Bị Phạt: {red}{xudie} ')
 	while True:
 		ntool=0
-		print('\033[1;35m──────────────────────────────────────────────────────────────────────')
-		print(f'{anh}{luc}Nhập {lamd}[{tim}1{lamd}] {luc}Để Chạy Nhiệm Vụ Tim')
-		print(f'{anh}{luc}Nhập {lamd}[{tim}2{lamd}] {luc}Để Chạy Nhiệm Vụ Follow')
-		print(f'{anh}{luc}Nhập {lamd}[{tim}3{lamd}] {luc}Để Chạy Nhiệm Vụ Follow Tiktok Now')
-		nhiem_vu=input(f'{anh}{luc}Nhập Số Để Chạy Nhiệm Vụ: {tim}')
-		dl = int(input(f'{anh}{luc}Nhập Delay: {tim}'))
+		print('\033[1;35m─────────────────────────────────────────────────────────────')
+		print(f'{anh}{lamd}Nhập {lamd}[{tim}1{lamd}] {lamd}Để Chạy Nhiệm Vụ Tim')
+		print(f'{anh}{lamd}Nhập {lamd}[{tim}2{lamd}] {lamd}Để Chạy Nhiệm Vụ Follow')
+		print(f'{anh}{lamd}Nhập {lamd}[{tim}3{lamd}] {lamd}Để Chạy Nhiệm Vụ Follow Tiktok Now')
+		nhiem_vu=input(f'{anh}{lamd}Nhập Số Để Chạy Nhiệm Vụ: {tim}')
+		dl = int(input(f'{anh}{lamd}Nhập Delay: {tim}'))
 		while True:
 			if ntool == 2:
 				break
 			ntool = 0
-			print('\033[1;35m──────────────────────────────────────────────────────────────────────')
-			nv_nhan=int(input(f'{anh}{luc}Sau Bao Nhiêu Nhiệm Vụ Thì Nhận Xu: {tim}'))
+			print('\033[1;35m─────────────────────────────────────────────────────────────')
+			nv_nhan=int(input(f'{anh}{lamd}Sau Bao Nhiêu Nhiệm Vụ Thì Nhận Xu: {tim}'))
 			if nv_nhan < 8:
 				print(red+'Trên 8 Nhiệm Vụ Mới Được Nhận Tiền!')
 				continue
 			if nv_nhan > 15:
 				print(red+'Nhận Xu Dưới 15 Nhiệm Vụ Để Tránh Lỗi')
 				continue
-			user_cau_hinh=input(f'{anh}{luc}Nhập User Name Tik Tok Cần Cấu Hình: {tim}')
+			user_cau_hinh=input(f'{anh}{lamd}Nhập User Name Tik Tok Cần Cấu Hình: {tim}')
 			cau_hinh=tds.run(user_cau_hinh)
 			if cau_hinh != False:
 				user=cau_hinh['uniqueID']
 				id_acc=cau_hinh['id']
 				os.system("cls" if os.name == "nt" else "clear")
-				print('\033[1;35m──────────────────────────────────────────────────────────────────────')
-				print(f'{luc}Đang Cấu Hình ID: {vang}{id_acc} {lam}| {luc}User: {vang}{user} {lam}| ')
+				print('\033[1;35m─────────────────────────────────────────────────────────────')
+				print(f'{lamd} ID: {vang}{id_acc} {tim}| {lamd}User: {vang}{user}  ')
+				print('\033[1;35m─────────────────────────────────────────────────────────────')
 								
 			else:
 				print(f'{red}Cấu Hinh Thất Bại User: {vang}{user_cau_hinh} ')
@@ -250,17 +256,17 @@ def main():
 										nhan = tds.nhan_xu('TIKTOK_LIKE_API', 'TIKTOK_LIKE')
 										if nhan == 0:
 											print(luc+'Nhận Xu Thất Bại Acc Tiktok Của Bạn Ổn Chứ ') 
-											print(f'{anh}{luc}Nhập {lamd}[{tim}1{lamd}] {luc}Để Thay Nhiệm Vụ ')
-											print(f'{anh}{luc}Nhập {lamd}[{tim}2{lamd}] {luc}Thay Acc Tiktok ')
-											print(f'{anh}{luc}Nhấn {lamd}[{tim}Enter{lamd}] {luc}Để Tiếp Tục')
-											chon=input(f'{anh}{luc}Nhập {trang}===>: {tim}')
+											print(f'{anh}{lamd}Nhập {lamd}[{tim}1{lamd}] {lamd}Để Thay Nhiệm Vụ ')
+											print(f'{anh}{lamd}Nhập {lamd}[{tim}2{lamd}] {lamd}Thay Acc Tiktok ')
+											print(f'{anh}{lamd}Nhấn {lamd}[{tim}Enter{lamd}] {lamd}Để Tiếp Tục')
+											chon=input(f'{anh}{lamd}Nhập {trang}===>: {tim}')
 											if chon == '1':
 												ntool=2
 												break
 											elif chon =='2':
 												ntool = 1
 												break
-											print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+											print('\033[1;35m─────────────────────────────────────────────────────────────')
 				if ntool==1 or ntool==2:break
 				if '2' in nhiem_vu:
 					listfollow = tds.get_job('tiktok_follow')
@@ -294,19 +300,18 @@ def main():
 									hien = f'{vang}[{red}X{vang}] {lam}| {lam}{tg} {lam}| {vang}FOLLOW {lam}| {trang}{id} {lam}|'; print(hien, end = '\r');sleep(1); print('                                                                                        ', end = '\r')
 								else:
 									dem+=1
-									tg=datetime.now().strftime('%H:%M:%S')
-									print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+									tg=datetime.now().strftime('%H:%M:%S')									
 									print(f'{lamd}[{tim}{dem}{lamd}]{h}●{e}{v} {tg} {e}{h}●{e}{k} FOLLOW {e}{h}●{e}\033[7;36m {id} \033[0m{h}●{e}')
 									delay(dl)
 									if dem % nv_nhan == 0:
 										nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW')
 										if nhan == 0:
-											print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+											print('\033[1;35m─────────────────────────────────────────────────────────────')
 											print(tim+'Nhận Xu Thất Bại Acc Tiktok Của Bạn Ổn Chứ ') 
-											print(f'{anh}{luc}Nhập {lamd}[{tim}1{lamd}] {luc}Để Thay Nhiệm Vụ ')
-											print(f'{anh}{luc}Nhập {lamd}[{tim}2{lamd}] {luc}Thay Acc Tiktok ')
-											print(f'{anh}{luc}Nhấn {lamd}[{tim}Enter{lamd}] {luc}Để Tiếp Tục')
-											chon=input(f'{anh}{luc}Nhập {trang}===>: {tim}')
+											print(f'{anh}{lamd}Nhập {lamd}[{tim}1{lamd}] {lamd}Để Thay Nhiệm Vụ ')
+											print(f'{anh}{lamd}Nhập {lamd}[{tim}2{lamd}] {lamd}Thay Acc Tiktok ')
+											print(f'{anh}{lamd}Nhấn {lamd}[{tim}Enter{lamd}] {lamd}Để Tiếp Tục')
+											chon=input(f'{anh}{lamd}Nhập {trang}===>: {tim}')
 											if chon == '1':
 												ntool=2
 												break
@@ -359,16 +364,16 @@ def main():
 										nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW')
 										if nhan == 0:
 											print(luc+'Nhận Xu Thất Bại Acc Tiktok Của Bạn Ổn Chứ ') 
-											print(f'{anh}{luc}Nhập {red}[{vang}1{red}] {luc}Để Thay Nhiệm Vụ ')
-											print(f'{anh}{luc}Nhập {red}[{vang}2{red}] {luc}Thay Acc Tiktok ')
-											print(f'{anh}{luc}Nhấn {red}[{vang}Enter{red}] {luc}Để Tiếp Tục')
-											chon=input(f'{anh}{luc}Nhập {trang}===>: {vang}')
+											print(f'{anh}{lamd}Nhập {red}[{vang}1{red}] {lamd}Để Thay Nhiệm Vụ ')
+											print(f'{anh}{lamd}Nhập {red}[{vang}2{red}] {lamd}Thay Acc Tiktok ')
+											print(f'{anh}{lamd}Nhấn {lamd}[{tim}Enter{lamd}] {lamd}Để Tiếp Tục')
+											chon=input(f'{anh}{lamd}Nhập {trang}===>: {vang}')
 											if chon == '1':
 												ntool=2
 												break
 											elif chon =='2':
 												ntool = 1
 												break
-											print('\033[1;35m──────────────────────────────────────────────────────────────────────')
+											print('\033[1;35m─────────────────────────────────────────────────────────────')
 main()
 
