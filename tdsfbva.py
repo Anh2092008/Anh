@@ -358,9 +358,9 @@ def hoanthanh(dem, id, type, msg, xu):
 	uid = id.split('_')[1] if '_' in id else id
 	time=datetime.now().strftime("%H:%M:%S")
 	print('\033[1;35m╔═══════════════╗')		      	
-	print(f'\033[1;35m║\033[1;34m\033[1;35m {dem}\033[1;34m\n\033[1;35m║ {v} {time} {e}\n\033[1;35m║ {f} Ẩn ID {e}\n\033[1;35m║ {a} {msg} {e}\n\033[1;35m║ {k} {type} {e}')
+	print(f'\033[1;35m║\033[1;34m\033[1;35m {dem}\033[1;34m\n\033[1;35m║ TG : {v} {time} {e}\n\033[1;35m║ ID : {f} {uid} {e}\n\033[1;35m║Xu : {a} {msg} {e}\n\033[1;35m║ NV : {k} {type} {e}')
 	print('\033[1;35m╚═══════════════╝')
-	print(f' {d} {xu}{e}{v} Xu {e}')
+	print(f'XHT : {d} {xu}{e}{v} Xu {e}')
 		 
 def error(id, type):
 	time=datetime.now().strftime("%H:%M:%S")
@@ -448,7 +448,7 @@ def main():
 			print('\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩\033[1;34m Nhập \033[1;34m[\033[1;35m2\033[1;34m]\033[1;34m Nhập Cookie Facebook Mới\n\n')
 			chon = input('\033[1;96m┌─[\033[1;105;90mVui Lòng Chọn Chế Độ !!\033[0m\033[1;34m]\n└──╼ \033[1;96m❯\033[1;95m❯\033[1;94m❯\033[1;33m ')
 			if chon == '1':
-				print('\033[1;35mĐang Lấy Cooki cũ Đã Lưu');sleep(1)
+				print('\033[1;35mĐang Lấy Cookie cũ Đã Lưu');sleep(1)
 				with open('Cookie_FB.txt', 'r') as f:
 					list_cookie = json.loads(f.read())
 					break
