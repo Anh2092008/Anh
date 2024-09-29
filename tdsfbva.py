@@ -358,9 +358,9 @@ def bongoc(so):
 def hoanthanh(dem, id, type, msg, xu):
 	uid = id.split('_')[1] if '_' in id else id
 	time=datetime.now().strftime("%H:%M:%S")
-	print(f'{do}╔{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══')		      	
+	print(f'{do}╔{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══')		      	
 	print(f'{trang}║\033[1;34m\033[1;35m {dem}\n{do}║ \033[1;97m[\033[1;91m❣\033[1;97m] TG : {v} {time} {e}\n{trang}║ \033[1;97m[\033[1;91m❣\033[1;97m] ID : {f} {uid} {e}\n{do}║ \033[1;97m[\033[1;91m❣\033[1;97m] Xu : {a} {msg} {e}\n{trang}║ \033[1;97m[\033[1;91m❣\033[1;97m] NV : {k} {type} {e}')
-	print(f'{do}╚{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══')
+	print(f'{do}╚{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══{trang}══{do}══')
 	print(f'   \033[1;97m  XHT : {d} {xu}{e}{v} Xu {e}')
 		 
 def error(id, type):
