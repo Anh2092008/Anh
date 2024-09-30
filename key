@@ -68,4 +68,4 @@ while True:
         print('\033[1;31m Key Sai mẹ rồi !!\033[0;m')
         
         
-        exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Toolgop').text)
+exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Toolgop').text)
