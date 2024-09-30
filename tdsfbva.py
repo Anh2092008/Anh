@@ -128,7 +128,7 @@ from bs4 import BeautifulSoup
     
 def banner():
 	
- os.system("cls" if os.name == "nt" else "clear")
+
  banner = f"""\033[1;31m    
                       ███╗   ██╗██╗   ██╗ █████╗ 
                       ████╗  ██║██║   ██║██╔══██╗
