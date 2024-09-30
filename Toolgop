@@ -119,7 +119,8 @@ def fetch_shortened_url(url, token):
 
 
 def main():
-    clear_screen()
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 if __name__ == "__main__":
     main()
