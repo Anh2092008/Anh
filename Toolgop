@@ -36,7 +36,7 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # Gọi hàm để xóa màn hình
-clear_screen()
+
 
 
 
