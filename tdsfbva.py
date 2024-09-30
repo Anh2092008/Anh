@@ -116,6 +116,8 @@ e='\033[0m'
 nva=a+'[NVA-Tool]'+end
 anh="\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ "
 def banner():
+	os.system('cls' if os.name == 'nt' else 'clear')
+	
 	
 
  banner= f"""\033[1;31m    
