@@ -115,21 +115,10 @@ k='\033[7;37m\033[1;34m'
 e='\033[0m'
 nva=a+'[NVA-Tool]'+end
 anh="\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ "
-
-
-import os, json, sys, requests 
-from sys import platform
-from time import sleep
-from datetime import datetime
-from random import randint
-from pystyle import Colors, Colorate
-import uuid, re
-from bs4 import BeautifulSoup
-    
 def banner():
 	
 
- banner = f"""\033[1;31m    
+ banner= f"""\033[1;31m    
                       ███╗   ██╗██╗   ██╗ █████╗ 
                       ████╗  ██║██║   ██║██╔══██╗
                       ██╔██╗ ██║██║   ██║███████║
@@ -143,6 +132,17 @@ def banner():
   sys.stdout.write(X)
   sys.stdout.flush() 
   sleep(0.00125)
+
+import os, json, sys, requests 
+from sys import platform
+from time import sleep
+from datetime import datetime
+from random import randint
+from pystyle import Colors, Colorate
+import uuid, re
+from bs4 import BeautifulSoup
+    
+
   
 class Facebook_Api (object):
 	def __init__(self, cookie):
