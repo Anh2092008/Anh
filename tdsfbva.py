@@ -115,25 +115,7 @@ k='\033[7;37m\033[1;34m'
 e='\033[0m'
 nva=a+'[NVA-Tool]'+end
 anh="\033[1;34m[\033[1;35m✾\033[1;34m] \033[1;35m➩ "
-def banner():
-	os.system('cls' if os.name == 'nt' else 'clear')
-	
-	
 
- banner= f"""\033[1;31m    
-                      ███╗   ██╗██╗   ██╗ █████╗ 
-                      ████╗  ██║██║   ██║██╔══██╗
-                      ██╔██╗ ██║██║   ██║███████║
-                      \033[1;37m██║╚██╗██║╚██╗ ██╔╝██╔══██║
-                      ██║ ╚████║ ╚████╔╝ ██║  ██║
-                      ╚═╝  ╚═══╝  ╚═══╝  ╚═╝  ╚═╝                                  
-\n
-"""
-
- for X in banner:
-  sys.stdout.write(X)
-  sys.stdout.flush() 
-  sleep(0.00125)
 
 import os, json, sys, requests 
 from sys import platform
@@ -143,9 +125,21 @@ from random import randint
 from pystyle import Colors, Colorate
 import uuid, re
 from bs4 import BeautifulSoup
-    
-
-  
+def banner():
+ os.system("cls" if os.name == "nt" else "clear")
+ banner = f"""\033[1;31m    
+                      ███╗   ██╗██╗   ██╗ █████╗ 
+                      ████╗  ██║██║   ██║██╔══██╗
+                      ██╔██╗ ██║██║   ██║███████║
+                      \033[1;37m██║╚██╗██║╚██╗ ██╔╝██╔══██║
+                      ██║ ╚████║ ╚████╔╝ ██║  ██║
+                      ╚═╝  ╚═══╝  ╚═══╝  ╚═╝  ╚═╝                                  
+\n
+"""
+ for X in banner:
+  sys.stdout.write(X)
+  sys.stdout.flush() 
+  sleep(0.00125)
 class Facebook_Api (object):
 	def __init__(self, cookie):
 		self.cookie = cookie
