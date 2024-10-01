@@ -198,7 +198,7 @@ elif chon == '2':
     exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/tdsfbva.py').text)
 #    
 elif chon == '3':
-    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/tds%20Instagram').text)
+    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/tdsInstagram').text)
 #    
 #ttc
 elif chon == '4':
