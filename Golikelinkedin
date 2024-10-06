@@ -100,7 +100,7 @@ def LINKEDIN():
         checkfile = os.path.isfile('COOKIELINKEDIN'+str(account_id)+'.txt')
         if checkfile == False:
             banner()
-            COOKIELINK = input(Fore.GREEN+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  Nhập Cookie Linkedin: ')
+            COOKIELINK = input(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  Nhập Cookie Linkedin: ')
             createfile = open('COOKIELINKEDIN'+str(account_id)+'.txt','w')
             createfile.write(COOKIELINK)
             createfile.close()
@@ -113,12 +113,12 @@ def LINKEDIN():
             readfile.close()
         os.system('cls' if os.name== 'nt' else 'clear')
         banner()        
-        print(Fore.GREEN+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  \033[1;32mTài Khoản : '+Fore.YELLOW+username)
-        print(Fore.GREEN+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  \033[1;32mTổng Tiền : '+Fore.YELLOW+str(coin)+' Vnđ')
+        print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTài Khoản : '+Fore.YELLOW+username)
+        print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTổng Tiền : '+Fore.YELLOW+str(coin)+' Vnđ')
         print("\033[97m════════════════════════════════════════════════")
       
-        choose = int(input(Fore.RED+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  Nhập Số Lượng Job : '))
-        DELAY = int(input(Fore.RED+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  Nhập Delay : '))
+        choose = int(input(Fore.RED+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  Nhập Số Lượng Job : '))
+        DELAY = int(input(Fore.RED+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  Nhập Delay : '))
         print("\033[97m════════════════════════════════════════════════")
         for i in range(choose):
                 url2 = 'https://gateway.golike.net/api/advertising/publishers/linkedin/jobs?account_id='+str(account_id)+'&data=null'
@@ -648,11 +648,11 @@ def banner():
 \n
 \033[1;97mTool : \033[1;32m Thầy Ông nội          \033[1;97mPhiên Bản: \033[1;32m4.0     
 \033[97m════════════════════════════════════════════════  
-\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Tool\033[1;31m     : \033[1;97m \033[1;31mGolike - Linkedin\033[1;33m \033[1;97m
-\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Youtube\033[1;31m  : \033[1;97m \033[1;36m\033[1;31m \033[1;97m
-\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Tik Tok\033[1;31m  : \033[1;33m\033[1;32m\033[1;31m
-\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Zalo\033[1;31m     : 
-\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Telegram\033[1;31m : 
+\033[1;97m[\033[1;91m⑉⁠\033[1;97m]\033[1;97m Tool\033[1;31m     : \033[1;97m \033[1;31mGolike - Linkedin\033[1;33m \033[1;97m
+\033[1;97m[\033[1;91m⑉⁠\033[1;97m]\033[1;97m Youtube\033[1;31m  : \033[1;97m \033[1;36m\033[1;31m \033[1;97m
+\033[1;97m[\033[1;91m⑉⁠\033[1;97m]\033[1;97m Tik Tok\033[1;31m  : \033[1;33m\033[1;32m\033[1;31m
+\033[1;97m[\033[1;91m⑉⁠\033[1;97m]\033[1;97m Zalo\033[1;31m     : 
+\033[1;97m[\033[1;91m⑉⁠\033[1;97m]\033[1;97m Telegram\033[1;31m : 
 \033[97m════════════════════════════════════════════════
 """
  for X in banner:
@@ -960,8 +960,8 @@ if checkurl1['status']== 200 :
         coin = checkurl1['data']['coin']
         user_id = checkurl1['data']['id']
         print('________________________________________________________')
-        print(Fore.GREEN+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  \033[1;32mTài Khoản : '+Fore.YELLOW+username)
-        print(Fore.GREEN+'\033[1;97m[\033[1;91m❣\033[1;97m] \033[1;36m✈  \033[1;32mTổng Tiền : '+Fore.YELLOW+str(coin))
+        print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTài Khoản : '+Fore.YELLOW+username)
+        print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTổng Tiền : '+Fore.YELLOW+str(coin))
         print(Fore.RED+'_________________________________________________________')
         LIST()
         print('\033[1;32mNhập \033[1;31m2 \033[1;33mĐể Xóa \033[1;34mAuthorization Hiện Tại')
