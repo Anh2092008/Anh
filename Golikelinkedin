@@ -92,7 +92,7 @@ def LINKEDIN():
         i += 1
         print(f'{vang}======================================================')
     # Yêu cầu người dùng chọn tài khoản bằng cách nhập số thứ tự
-    choose = int(input('\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} Nhập Tài Khoản{e} : '))
+    choose = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} Nhập Tài Khoản{e} : '))
     os.system('cls' if os.name== 'nt' else 'clear')
     if choose >=1 or choose <= len(user_linkedin1) :
         user_tiktok1 = user_linkedin1[choose-1:choose]
@@ -119,8 +119,8 @@ def LINKEDIN():
         print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTổng Tiền : '+Fore.YELLOW+str(coin)+' Vnđ')
         print("\033[97m════════════════════════════════════════════════")
       
-        choose = int(input(Fore.RED+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} Nhập Số Lượng Job{e} : '))
-        DELAY = int(input(Fore.RED+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  {n}Nhập Delay{e} : '))
+        choose = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} Nhập Số Lượng Job{e} : '))
+        DELAY = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  {n}Nhập Delay{e} : '))
         print("\033[97m════════════════════════════════════════════════")
         for i in range(choose):
                 url2 = 'https://gateway.golike.net/api/advertising/publishers/linkedin/jobs?account_id='+str(account_id)+'&data=null'
