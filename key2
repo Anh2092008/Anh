@@ -63,7 +63,7 @@ while True:
     print(f'{anh}  {trang}[{lam} IP {trang}]{trang}{vang} {vang}: {luc}{client_ip}')
     print(f"{anh} {trang} [ {lam}TG{trang} ] {vang}: {luc}{gio_hien_tai}")
     print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
-    print(f"{anh} \033[1;33mLink Key Ngày \033[1;32m:\033[1;36m {yeumoney}")
+    print(f"{anh} \033[1;33mLink Key Ngày \033[1;32m:\033[1;36m {key}")
     print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
     inputkey = input('\033[1;37m[\033[1;31m✾\033[1;37m] \033[1;37m➩ \033[1;33mNhập key \033[1;35m==>: \033[1;95m').strip()
     if inputkey == key:
