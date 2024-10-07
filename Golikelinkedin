@@ -87,7 +87,7 @@ def LINKEDIN():
         STATUS.append(Fore.GREEN + "Hoạt Động" + Fore.RESET)
         
         # In ra thông tin tài khoản mà không cần hiển thị dạng bảng
-        print(f' {lam}{i} {trang}=> {n}{luc}NAME : {vang}{usernametk}{e} {xanhd}=> {n}{STATUS[-1]}{e}')
+        print(f' {lam}{i} {trang}=> {n}{luc}NAME{e} : {n}{vang}{usernametk}{e} {xanhd}=> {n}{STATUS[-1]}{e}')
         
         i += 1
         print(f'{vang}======================================================')
@@ -102,7 +102,7 @@ def LINKEDIN():
         checkfile = os.path.isfile('COOKIELINKEDIN'+str(account_id)+'.txt')
         if checkfile == False:
             banner()
-            COOKIELINK = input(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  Nhập Cookie Linkedin: ')
+            COOKIELINK = input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  {n}\033[1;36mNhập Cookie Linkedin{n}: \033[1;36m')
             createfile = open('COOKIELINKEDIN'+str(account_id)+'.txt','w')
             createfile.write(COOKIELINK)
             createfile.close()
@@ -115,13 +115,13 @@ def LINKEDIN():
             readfile.close()
         os.system('cls' if os.name== 'nt' else 'clear')
         banner()        
-        print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTài Khoản : '+Fore.YELLOW+username)
-        print(Fore.GREEN+'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  \033[1;32mTổng Tiền : '+Fore.YELLOW+str(coin)+' Vnđ')
-        print("\033[97m════════════════════════════════════════════════")
+        print(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} \033[1;32mTài Khoản{e} :\033[1;36m '+Fore.YELLOW+username)
+        print(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} \033[1;32mTổng Tiền{e} :\033[1;36m '+Fore.YELLOW+str(coin)+' Vnđ')
+        print("\033[1;97m════════════════════════════════════════════════")
       
-        choose = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} \033[1;36mNhập Số Lượng Job{e} : '))
-        DELAY = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  {n}\033[1;36mNhập Delay{e} : '))
-        print("\033[97m════════════════════════════════════════════════")
+        choose = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} \033[1;36mNhập Số Lượng Job{e} :\033[1;36m '))
+        DELAY = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈  {n}\033[1;36mNhập Delay{e} :\033[1;36m '))
+        print("\033[1;97m════════════════════════════════════════════════")
         for i in range(choose):
                 url2 = 'https://gateway.golike.net/api/advertising/publishers/linkedin/jobs?account_id='+str(account_id)+'&data=null'
                 checkurl2 = ses.get(url2,headers=headers).json()
