@@ -1,0 +1,158 @@
+import requests
+import time
+import random
+import os
+# Mã màu sắc ANSI
+XANH_LA = "\033[1;32m"  # Màu cho thông báo thành công
+XANH_DUONG = "\033[1;34m"  # Màu cho thông báo xử lý
+DO = "\033[1;31m"  # Màu cho thông báo lỗi
+VANG = "\033[1;33m"  # Màu cho thông báo đang chờ
+TRANG = "\033[1;37m"  # Màu trắng (dùng khi cần làm nổi bật)
+KET_THUC = "\033[0m"  # Kết thúc màu
+anh = TRANG + "[" + DO + "✾" + TRANG + "]" + DO + " ➩ "
+
+
+banner = f"""\033[1;3m\033[1;38m   
+               \033[1;31m███╗   ██╗██╗   ██╗ █████╗ 
+               ████╗  ██║██║   ██║██╔══██╗
+               ██╔██╗ ██║██║   ██║███████║
+               \033[1;37m██║╚██╗██║╚██╗ ██╔╝██╔══██║
+               ██║ ╚████║ ╚████╔╝ ██║  ██║
+               ╚═╝  ╚═══╝  ╚═══╝  ╚═╝  ╚═╝                                  
+\033[0m\n
+\033[1;97mTool : \033[1;32m Thầy Ông nội
+\033[97m════════════════════════════════════════════════  
+\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Tool\033[1;31m     : \033[1;97m \033[1;31mĐổi Mk tds\033[1;33m \033[1;97m
+\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Youtube\033[1;31m  : \033[1;97m \033[1;36m\033[1;31m \033[1;97m
+\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Tik Tok\033[1;31m  : \033[1;33m\033[1;32m\033[1;31m
+\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Zalo\033[1;31m     : 
+\033[1;97m[\033[1;91m❣\033[1;97m]\033[1;97m Telegram\033[1;31m : 
+\033[97m════════════════════════════════════════════════
+\n"""
+os.system('cls' if os.name == 'nt' else 'clear')
+print(banner)
+# Nhập danh sách tài khoản từ người dùng
+list_acc = []
+num_accounts = int(input(f"{anh}\033[1;37mNhập \033[1;36msố \033[1;35mlượng \033[1;34mtài \033[1;33mkhoản \033[1;32mbạn \033[1;31mmuốn \033[1;30mthêm: " + KET_THUC))
+
+for i in range(num_accounts):
+    username = input(f"{anh}\033[1;37mNhập \033[1;36mtài \033[1;35mkhoản {i+1} (username): " + KET_THUC)
+    password = input(f"{anh}\033[1;37mNhập \033[1;36mmật \033[1;35mkhẩu {i+1} (password): " + KET_THUC)
+    list_acc.append(f"{username}|{password}")
+
+file_luu = "list_save.txt"
+string_acc = ""
+
+def delay(time_sec):
+    for t in range(time_sec, 0, -1):
+        
+        time.sleep(0.1)
+      # In dòng mới sau khi đếm thời gian
+
+def check_user(cookie):
+    url = 'https://traodoisub.com/view/setting/load.php'
+    headers = {
+        'authority': 'traodoisub.com',
+        'accept': 'application/json, text/javascript, */*; q=0.01',
+        'accept-language': 'vi-VN,vi;q=0.9,en;q=0.8',
+        'cookie': cookie,
+        'referer': 'https://traodoisub.com/view/setting/',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'x-requested-with': 'XMLHttpRequest'
+    }
+
+    response = requests.get(url, headers=headers)
+    if '"tokentds":"' in response.text:
+        return response.json()
+    return False
+
+def dang_nhap(username, password):
+    url = 'https://traodoisub.com/scr/login.php'
+    data = {
+        'username': username,
+        'password': password
+    }
+    headers = {
+        'authority': 'traodoisub.com',
+        'accept': 'application/json, text/javascript, */*; q=0.01',
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'referer': 'https://traodoisub.com/',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'x-requested-with': 'XMLHttpRequest'
+    }
+
+    response = requests.post(url, data=data, headers=headers, allow_redirects=False)
+    if '"success":true' in response.text:
+        cookie = response.headers.get('Set-Cookie').split(';')[0]
+        return cookie
+    return False
+
+def doipass(cookie, old_password, new_password):
+    url = 'https://traodoisub.com/scr/doipass.php'
+    data = {
+        'oldpass': old_password,
+        'newpass': new_password,
+        'renewpass': new_password
+    }
+    headers = {
+        'cookie': cookie,
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'referer': 'https://traodoisub.com/view/setting/',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'x-requested-with': 'XMLHttpRequest'
+    }
+
+    response = requests.post(url, data=data, headers=headers)
+    return response.text == "0"
+
+def random_string(length):
+    return ''.join(random.choice("qetyuiopadghklzcvbnmQETYUIOPA") for _ in range(length))
+
+loi = 0
+i1 = 0
+
+for i, acc in enumerate(list_acc):
+    if len(acc.strip()) < 5:
+        loi += 1
+        if loi > 3:
+            break
+        continue
+    i1 += 1
+    loi = 0
+
+    username, password = acc.strip().split("|")
+    
+    print(f"{anh}\033[1;37mĐang \033[1;36mxử \033[1;35mlý \033[1;34mtài \033[1;33mkhoản {i1}: \033[1;32m{username}" + KET_THUC)
+
+    print(f"{anh}\033[1;37mĐang \033[1;36mlấy \033[1;35mcookie..." + KET_THUC)
+    delay(1)
+    cookie = dang_nhap(username, password)
+    
+    if cookie:
+        print(f"{anh}\033[1;37mĐăng \033[1;36mnhập \033[1;35mthành \033[1;34mcông \033[1;31m!" + KET_THUC)
+        print(f"{anh}\033[1;37mĐang \033[1;36mkiểm\033[1;35m tra \033[1;34muser\033[1;33m.\033[1;32m.\033[1;31m." + KET_THUC)
+        delay(1)
+        check_user_data = check_user(cookie)
+        
+        if check_user_data:
+            xu = check_user_data.get("xu")
+            user = check_user_data.get("user")
+            tokentds = check_user_data.get("tokentds")
+
+            print(f"{anh}\033[1;37mĐang\033[1;36m đổi \033[1;35mpass \033[1;34mcho " + username + "\033[1;33m.\033[1;32m.\033[1;31m." + KET_THUC)
+            delay(1)
+            new_password = "Nvadz-" + random_string(8)
+            if doipass(cookie, password, new_password):
+                string_acc += f"Tk : {username}\nMk : {new_password}\nXu : {xu}\n token : {tokentds}\n"
+                with open(file_luu, "w") as f_save:
+                    f_save.write(string_acc)
+                print(f"{anh}\033[1;37mĐổi\033[1;36m pass \033[1;35mthành \033[1;34mcông \033[1;33mcho \033[1;32m" + username + "\033[1;31m : \033[1;30m" + new_password + KET_THUC)
+                print(f"{anh}\033[1;37mTk :\033[1;31m {username}\n{anh}\033[1;37mMk :\033[1;31m {new_password} \n\033[1;37mTài \033[1;36mkhoản \033[1;35mvà \033[1;34mmật\033[1;33m khẩu\033[1;32m mới \033[1;31mcho \033[1;33m{username} \033[1;37mđã \033[1;36mđược \033[1;35mghi \033[1;34mvào \033[1;33mfile \033[1;37m[ \033[1;31mlist_save.txt\033[1;37m ]" + KET_THUC)
+            else:
+                print(f"{anh}Đổi pass thất bại cho " + username + KET_THUC)
+        else:
+            print(f"{anh}Check user thất bại cho " + username + KET_THUC)
+    else:
+        print(f"{anh}Tài khoản hoặc mật khẩu sai cho " + username + KET_THUC)
+    
+    delay(5)
