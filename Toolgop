@@ -178,6 +178,7 @@ print("\033[1;37m╚════════════════════
 print(f' {n}{anh}{xanhnhat}7.0{vang} :{trang} TOOL NUÔI FB V1 {on}')
 print(f' {anh}{xanhnhat}8.0{vang} :{trang} TOOL NUÔI FB V2 {on}')
 print(f' {anh}{xanhnhat}9.0{vang} :{trang} TOOL Zefoy {on}')
+print(f' {anh}{xanhnhat}9.1{vang} :{trang} Đổi Mk tds {on}')
 print(f' {anh}{xanhnhat}10 {vang} :{trang} TOOL Spam Message {off}{e}')
 print("\033[1;37m╔══════════════════════╗         ")
 print("\033[1;37m║  \033[1;31mTool Auto Golike    \033[1;37m║          ")
@@ -242,6 +243,9 @@ elif chon == '8.0':
 #
 elif chon == '9.0':
 	exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Zefoy').text)
+	#
+elif chon == '9.1':
+	exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Mktds').text)
 #golikett
 elif chon == '10':
 	exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Spammessage').text)
