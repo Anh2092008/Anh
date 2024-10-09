@@ -195,7 +195,7 @@ class ApiZefoy:
             elif 'Too many requests. Please slow' in self.video_info:
                 time.sleep(3)
             else:
-                print(vang+self.video_info)
+                print("{vang}{self.video_info}")
 
 Z = ApiZefoy()
 Z.giai_captcha()
