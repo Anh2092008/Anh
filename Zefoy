@@ -124,7 +124,7 @@ class ApiZefoy:
         print(banner)
         print(table)
         while True:
-            self.service = int(input(f"{anh}Nhập số:{vang} "))-1
+            self.service = int(input(f"{anh}Nhập số:{trang} "))-1
             if self.service > len(self.services_status)-1 or self.service < 0:
                 print(f"{anh}{do}Bạn nhập sai số!")
             else:
@@ -170,7 +170,7 @@ class ApiZefoy:
                 time.sleep(3)
                 continue
             if 'Session expired. Please re-login' in self.video_info:
-                print(f'{vua}Phiên hết hạn. Đang đăng nhập lại...')
+                print(f'{anh}Phiên hết hạn. Đang đăng nhập lại...')
                 self.giai_captcha()
                 return
             elif 'service is currently not working' in self.video_info:
@@ -185,7 +185,7 @@ class ApiZefoy:
                 except: 
                     return (False,)
                 if lamtilo==0:self.find_video()
-                elif lamtilo >= 1000: print(f'{vua}Your IP was banned')
+                elif lamtilo >= 1000: print(f'{anh}Your IP was banned')
                 _=time.time()
                 while time.time()-2<_+lamtilo:
                     t-=1
