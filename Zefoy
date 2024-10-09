@@ -189,7 +189,7 @@ class ApiZefoy:
                 _=time.time()
                 while time.time()-2<_+lamtilo:
                     t-=1
-                    print(f"{z} Vui lòng chờ : {t} giây...", end="\r")
+                    print(f"{z} {n}{do}Vui lòng chờ {vang}:{trang} {t} {do}giây{xanhnhat}.{tim}.{hongnhat}.", end="\r")
                     time.sleep(1)
                 continue
             elif 'Too many requests. Please slow' in self.video_info:
