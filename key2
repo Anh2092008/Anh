@@ -97,7 +97,8 @@ getIP = requests.get('https://66c8-f8d-b29f-44a-5a90-f94-024c-33d-b8c6.vuhoangpr
 
 key = genkey(getIP)
 url =  f'https://huongdev.com/?key={key}' # Trang đích 
-yeumoney = requests.get(f'https://link4m.co/api-shorten/v2?api=66cd182d82f1d87dd96f0210&url={url}').json()["shortenedUrl"]
+#yeumoney = requests.get(f'https://link4m.co/api-shorten/v2?api=66cd182d82f1d87dd96f0210&url={url}').json()["shortenedUrl"]
+yeumoney = requests.get(f'https://yeumoney.com/QL_api.php?token=09f5d84bf07eefe03050ce6f928e794f13cb4c44f0cc13862e4c4d29ee74a1ae&format=json&url={url}').json()['shortenedUrl']
 while True:
     if os.path.exists(FileLuuKey):
         with open(FileLuuKey, "r") as file:
@@ -109,7 +110,7 @@ while True:
             continue
     print(f'{anh}{n}{lam} IP {vang}: {luc}{client_ip}{e}')
     print(f"{anh}{n}{lam} TG {vang}: {luc}{gio_hien_tai}{e}")
-    print(f"{anh}{n}{lam} Key Free 1N {vang}:{luc} {key}{e} ")
+    print(f"{anh}{n}{lam} Key Free 1N {vang}:{luc} {ko}{e} ")
     print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
     print(f"{anh} \033[1;33mLink Key Ngày \033[1;32m:\033[1;36m {yeumoney}")
     print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
