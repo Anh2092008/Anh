@@ -107,9 +107,9 @@ while True:
         else:
             os.remove(FileLuuKey)
             continue
-    print(f'{anh}{lam} IP {vang}: {luc}{client_ip}')
-    print(f"{anh}{lam} TG {vang}: {luc}{gio_hien_tai}")
-    print(f"{anh}{n}{lam} Key Free 1N {e}{vang}:{luc} {key} ")
+    print(f'{anh}{n}{lam} IP {vang}: {luc}{client_ip}{e}')
+    print(f"{anh}{n}{lam} TG {vang}: {luc}{gio_hien_tai}{e}")
+    print(f"{anh}{n}{lam} Key Free 1N {vang}:{luc} {key}{e} ")
     print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
     print(f"{anh} \033[1;33mLink Key Ngày \033[1;32m:\033[1;36m {yeumoney}")
     print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
