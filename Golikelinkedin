@@ -93,7 +93,7 @@ def LINKEDIN():
         i += 1
         print(f'{vang}======================================================')
     # Yêu cầu người dùng chọn tài khoản bằng cách nhập số thứ tự
-    choose = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m✈ {n} \033[1;37mNhập \033[1;36mTài\033[1;35m Khoản{e}\033[1;34m :\033[1;33m '))
+    choose = int(input(f'\033[1;97m[\033[1;91m⑉⁠\033[1;97m] \033[1;36m{n} \033[1;37mNhập \033[1;36mTài\033[1;35m Khoản{e}\033[1;34m :\033[1;33m '))
     os.system('cls' if os.name== 'nt' else 'clear')
     if choose >=1 or choose <= len(user_linkedin1) :
         user_tiktok1 = user_linkedin1[choose-1:choose]
