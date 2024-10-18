@@ -17,14 +17,6 @@ from random import randint
 from pystyle import Colors, Colorate
 import uuid, re
 from bs4 import BeautifulSoup
-def banner():
- os.system("cls" if os.name == "nt" else "clear")
- banner = f"""\n\n"""
- for X in banner:
-  sys.stdout.write(X)
-  sys.stdout.flush() 
-  sleep(0.00125)
-  
 class Facebook_Api (object):
 	def __init__(self, cookie):
 		self.cookie = cookie
@@ -283,7 +275,6 @@ def nghingoi(delaymin, delaymax):
 def main():
 	ntool = 0
 	dem = 0
-	banner()
 	while True:
 		if os.path.exists('configtds.txt'):
 			with open('configtds.txt', 'r') as f:
@@ -291,6 +282,7 @@ def main():
 			tds = TraoDoiSub_Api(token)
 			data = tds.main()
 			try:
+				print('\033[1m\033[38;5;51mTDS \x1b[38;5;46mFB \x1b[38;5;226mCủa \x1b[38;5;208mBạn \033[1m\033[38;5;51mĐây \x1b[38;5;46m ', end = '\r');sleep(2); print('                                                        ', end = '\r')
 				print(f'{anh}\033[1m\033[38;5;51mNhập \033[1;37m[\033[1;32m1\033[1;37m] \x1b[38;5;46mGiữ \x1b[38;5;226mLại \x1b[38;5;208mTài \033[1m\033[38;5;51mKhoản '+ data['user'] )
 				print(f'{anh}\033[1m\033[38;5;51mNhập \033[1;37m[\033[1;32m2\033[1;37m] \x1b[38;5;46mNhập \x1b[38;5;226mAccess_Token \x1b[38;5;208mTDS \033[1m\033[38;5;51mMới')
 				chon = input(f'{anh}\033[1m\033[38;5;51mNhập \x1b[38;5;46m===>:\x1b[38;5;226m ')
@@ -329,7 +321,8 @@ def main():
 			print(f'{anh}\033[1m\033[38;5;51mNhập \033[1;37m[\033[1;32m2\033[1;37m] \x1b[38;5;46mNhập \x1b[38;5;46mcho \x1b[38;5;226mCookie \x1b[38;5;208mFacebook \033[1m\033[38;5;51mMới')
 			chon = input(f'{anh}\033[1m\033[38;5;51mVui \x1b[38;5;46mLòng \x1b[38;5;226mNhập\x1b[38;5;208m :\033[1m\033[38;5;51m ')
 			if chon == '1':
-				print('\033[1m\033[38;5;51mĐang \x1b[38;5;46mLấy \x1b[38;5;226mDữ \x1b[38;5;208mLiệu \033[1m\033[38;5;51mĐã \x1b[38;5;46mLưu');sleep(1)
+				print('\033[1m\033[38;5;51mĐang \x1b[38;5;46mLấy \x1b[38;5;226mDữ \x1b[38;5;208mLiệu \033[1m\033[38;5;51mĐã \x1b[38;5;46mLưu ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+				print("\033[1;97m= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =")
 				with open('Cookie_FB.txt', 'r') as f:
 					list_cookie = json.loads(f.read())
 					break
@@ -342,7 +335,7 @@ def main():
 			with open('Cookie_FB.txt', 'w') as f:
 				json.dump(list_cookie, f)
 			break
-	banner()
+	
 	print(f'{anh}\033[1m\033[38;5;51mTên \x1b[38;5;46mTài \x1b[38;5;226mKhoản\x1b[38;5;208m : \033[1;105;90m{user}\033[0m \033[1m\033[38;5;51mXu \x1b[38;5;46mHiện \x1b[38;5;226mTại \x1b[38;5;208m: {tim}'+str(format(int(xu), ','))+f'\033[1m\033[38;5;51m Xu \x1b[38;5;46mBị \x1b[38;5;226mPhạt \x1b[38;5;208m: {red}{xudie} \033[1m\033[38;5;51mSố \x1b[38;5;46mCookie \x1b[38;5;226m: {tim}{len(list_cookie)} ')
 	print("\033[1;97m╚ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ╝")
 	print(f'{anh}\033[1;37m[\033[1;32m1\033[1;37m] : \033[1m\033[38;5;51mNhiệm Vụ Like\n{anh}\033[1;37m[\033[1;32m2\033[1;37m] : \x1b[38;5;46mNhiệm Vụ COMMENT\n{anh}\033[1;37m[\033[1;32m3\033[1;37m] : \x1b[38;5;226mNhiệm Vụ Chia Sẻ\n{anh}\033[1;37m[\033[1;32m4\033[1;37m] : \x1b[38;5;208mNhiệm Vụ Thả Cảm Xúc')
