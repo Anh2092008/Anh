@@ -65,7 +65,7 @@ print('\033[1;39m─────────────────────
 if chon == '1':
 	exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/tdsfbva.py').text)
 elif chon == '2':
-	exec(requests.get('').text)
+	exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/tdsttva.py').text)
 elif chon == '3':
 	exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Spamsms').text)
 elif chon == '4':
