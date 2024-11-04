@@ -50,7 +50,7 @@ FileLuuKey = 'keytoolnva.txt' # Bạn có thể thay tùy thích:v
 getIP = requests.get('https://kiemtraip.com/raw.php').text
 
 key = genkey(getIP)
-url = f'https://huongdev.com/?key={key}'  # Trang đích 
+url = f'https://flttnva.com/?key={key}'  # Trang đích 
 yeumoney = requests.get(f'https://link4m.co/api-shorten/v2?api=66cd182d82f1d87dd96f0210&url={url}').json()["shortenedUrl"]
 
 while True:
