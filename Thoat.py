@@ -65,7 +65,7 @@ while True:
 
     #print(f"{thu} Ngày {ngay} Tháng {thang} Năm {nam}")
     #print(f'Giờ : {gio}')
-    print("Chú ý : Key là bắt đầu từ key= của url")
+    print("\033[1;31mChú ý : Key là bắt đầu từ key= của url")
     print("Nếu ko hiểu liên hệ Zalo : https://zaloapp.com/qr/p/1dvbslht1vl1r?src=qr")
     print(f"\033[1;33mLink Key Ngày \033[1;32m:\033[1;36m {yeumoney}")
 
