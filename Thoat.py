@@ -1,14 +1,22 @@
-import requests
-import time
-import os
-import sys
+import requests,os,sys, time
+from datetime import datetime
 from time import sleep, strftime
 import hashlib
-from datetime import datetime
-
-os.system("cls" if os.name == "nt" else "clear")
-
-# Lấy thời gian hiện tại
+lamd = "\033[1;34m"
+trang = "\033[1;37m"
+xanh_la = "\033[1;32m"
+xanh_duong = "\033[1;34m"
+do = "\033[1;31m"
+vang = "\033[1;33m"
+tim = "\033[1;35m"
+xanhnhat = "\033[1;36m"
+xanh = "\033[1;32m"
+baner ="??????????\n"
+het ="\033[0m"
+ngan= "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫⁠\n"
+tren = "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+duoi ="┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"
+os.system("clear")
 current_date = datetime.now()
 ngay = current_date.strftime('%d')
 thang = current_date.month
@@ -24,14 +32,13 @@ thu_dict = {
     "Sunday": "Chủ Nhật"
 }
 thu = thu_dict[current_date.strftime("%A")]
-
-# Hàm loading animation
+mau = f"{thu} Ngày {ngay} Tháng {thang} Năm {nam}\nGiờ : {gio}\n"
 def loading_animation(duration=10):
     end_time = time.time() + duration
     loading_chars = ['|', '/', '-', '\\']  
     while time.time() < end_time:
         for char in loading_chars:
-            sys.stdout.write('\rĐang Loading Vui Lòng Chờ ' + char)  
+            sys.stdout.write('\rĐang Loading Vui Lòng Chờ ' + char+'')  
             sys.stdout.flush()  
             time.sleep(0.01)  
 
@@ -41,7 +48,10 @@ def loading_animation(duration=10):
 
 # Gọi hàm Để Loading hiện 
 loading_animation()
-
+for X in baner:
+    sys.stdout.write(X)
+    sys.stdout.flush()
+    sleep(0.25)
 def genkey(ip):
     return hashlib.md5(f"{ip}{datetime.now().strftime('%Y-%m-%d')}7535gydr".encode()).hexdigest()
 
@@ -84,69 +94,37 @@ while True:
         print('                                                        ', end='\r')
         
         os.system("clear")
-
-# In thời gian và thông báo
-print(f'{thu} Ngày {ngay} Tháng {thang} Năm {nam}')
-print(f'Giờ : {gio} ')
-print('\033[1;31mChú ý\033[0m : Nguồn lỏ nhiều khi Thành Công Nhưng FL ko tăng')
-
-username = input('\033[1;36mNhập Username Tik Tok ( Sau @ ) : ')
-me = f"\033[1;36mUsername\033[0m  : {username}\n"
-for X in me:
+os.system("clear")
+for X in baner:
     sys.stdout.write(X)
     sys.stdout.flush()
     sleep(0.25)
-print('----------------------------------------')
+for X in mau:
+    sys.stdout.write(X)
+    sys.stdout.flush()
+    sleep(0.25)
+for X in tren:
+    sys.stdout.write(X)
+    sys.stdout.flush()
+    sleep(0.025)
+print("\033[1;37m➩ Nhập Số [1] Tool Buff follow Tik Tok\033[0m")
+for X in ngan:
+    sys.stdout.write(X)
+    sys.stdout.flush()
+    sleep(0.025)
+print("\033[1;37m➩ Nhập Số [2] Tool Buff Tik Tok Zefoy\033[0m")
+for X in duoi:
+    sys.stdout.write(X)
+    sys.stdout.flush()
+    sleep(0.025)
+chon = str(input(' Nhập Lựa Chọn : '))
 
-while True:
-    headers = {
-        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'accept-language': 'vi,fr-FR;q=0.9,fr;q=0.8,en-US;q=0.7,en;q=0.6',
-        'cache-control': 'max-age=0',
-        'priority': 'u=0, i',
-        'sec-ch-ua': '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-fetch-dest': 'document',
-        'sec-fetch-mode': 'navigate',
-        'sec-fetch-site': 'cross-site',
-        'sec-fetch-user': '?1',
-        'upgrade-insecure-requests': '1',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    }
-    
-    access = requests.get('https://tikfollowers.com/free-tiktok-followers', headers=headers)
-    try:
-        session = access.cookies['ci_session']
-        headers.update({'cookie': f'ci_session={session}'})
-        token = access.text.split("csrf_token = '")[1].split("'")[0]
-        data = '{"type":"follow","q":"@' + username + '","google_token":"t","token":"' + token + '"}'
-        
-        search = requests.post('https://tikfollowers.com/api/free', headers=headers, data=data).json()
-        if search['success'] == True:
-            data_follow = search['data']
-            data = '{"google_token":"t","token":"' + token + '","data":"' + data_follow + '","type":"follow"}'
-            send_follow = requests.post('https://tikfollowers.com/api/free/send', headers=headers, data=data).json()
-            if send_follow['o'] == 'Success!' and send_follow['success'] == True and send_follow['type'] == 'success':
-                print(f'\033[1;32mThành Công\033[0m : Tăng Follow Tik Tok')
-                print(f'\033[1;36mUsername\033[0m  : {username}')
-                print('----------------------------------------')
-                continue
-            elif send_follow['o'] == 'Oops...' and send_follow['success'] == False and send_follow['type'] == 'info':
-                try:
-                    thoigian = send_follow['message'].split('You need to wait for a new transaction. : ')[1].split('.')[0]
-                    phut = thoigian.split(' Minutes')[0]
-                    giay = int(phut) * 60
-                    for i in range(giay, 0, -1):
-                        print(f'\033[1;36mVui Lòng Chờ {i} Giây\033[0m ', end='\r')
-                        time.sleep(1)
-                    continue
-                except:
-                    print(f'\033[1;31mThất Bại\033[0m : Tăng Follow Tik Tok')
-                print(f'\033[1;36mUsername\033[0m  : {username}')
-                print('----------------------------------------')
-                continue
-    except:
-        print('Lỗi Không Xác Định               ', end='\r')
-        sleep(1)
-        print('                                                        ', end='\r')
-        continue
+
+if chon == '1':
+    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Bufffltt').text)
+#    
+elif chon == '2':
+    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Zefoy').text)
+else:
+    print("Sai Lựa Chọn")
+    exit()
