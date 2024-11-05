@@ -1,209 +1,737 @@
-import os,time,re,random,base64
-try:
-    import requests,prettytable,colorama
-except:
-    os.system('pip install requests && pip install prettytable && pip install colorama')
-import requests
-from prettytable import PrettyTable
-from colorama import init, Fore
-from urllib.parse import urlparse, unquote, quote
-from string import ascii_letters, digits
-os.system("cls" if os.name == "nt" else "clear")
+import subprocess
+import sys,os
+import datetime
+from time import sleep, strftime
+from datetime import datetime
+current_date = datetime.now()
+ngay = current_date.strftime('%d')
+thang = current_date.month
+nam = current_date.year
+gio = current_date.strftime('%H : %M : %S')
+thu_dict = {
+    "Monday": "Thứ Hai",
+    "Tuesday": "Thứ Ba",
+    "Wednesday": "Thứ Tư",
+    "Thursday": "Thứ Năm",
+    "Friday": "Thứ Sáu",
+    "Saturday": "Thứ Bảy",
+    "Sunday": "Chủ Nhật"
+}
+thu = thu_dict[current_date.strftime("%A")]
 
-
-
-trang = "\033[1;37m\033[1m"
-xanh_la = "\033[1;32m\033[1m"
-xanh_duong = "\033[1;34m\033[1m"
-xanhnhat = '\033[1m\033[38;5;51m'
-do = "\033[1;31m\033[1m\033[1m"
-xam = '\033[1;30m\033[1m'
-vang = "\033[1;33m\033[1m"
-tim = "\033[1;35m\033[1m"
-hongnhat = "#FFC0CB"
-z = "\033[1;37m<\033[1;31m/\033[1;37m>"
-anh = trang + "[" + do + "✾" + trang + "]" + do + " ➩ "
-dac_biet = "\033[32;5;245m\033[1m\033[38;5;39m"
-vua = "\033[1;31m\033[1m\033[1m[\033[1;37m\033[1m=.=\033[1;31m\033[1m\033[1m] \033[1;37m\033[1m=> \033[1;32m\033[1m"
-
-
-banner = """\033[1;3m\033[1;38m   
-               \033[1;31m███╗   ██╗██╗   ██╗ █████╗ 
-               ████╗  ██║██║   ██║██╔══██╗
-               ██╔██╗ ██║██║   ██║███████║
-               \033[1;37m██║╚██╗██║╚██╗ ██╔╝██╔══██║
-               ██║ ╚████║ ╚████╔╝ ██║  ██║
-               ╚═╝  ╚═══╝  ╚═══╝  ╚═╝  ╚═╝                                  
-\033[0m\n
-\033[1;97mTool : \033[1;32m Thầy Ông nội               
-\033[97m════════════════════════════════════════════════  
-\033[1;97m[\033[1;91m⑉⁠\033[1;97m]\033[1;97m Tool\033[1;31m     : \033[1;97m \033[1;31mZefoy\033[1;33m \033[1;97m
-\033[1;97m[\033[1;91m⑉⁠\033[1;97m]
-\033[1;97m[\033[1;91m⑉⁠\033[1;97m]
-\033[1;97m[\033[1;91m⑉⁠\033[1;97m]
-\033[1;97m[\033[1;91m⑉⁠\033[1;97m]
-\033[97m════════════════════════════════════════════════
-\n"""
+banner = f"""    \033[1;97m
+               ?????????\n"""
 
 os.system('cls' if os.name == 'nt' else 'clear')
 print(banner)
+print(f'{thu} Ngày {ngay} Tháng {thang} Năm {nam}')
+print(f'Giờ : {gio} ')
+required_libraries = [
+    'requests', 'pytz', 'colorama', 'urllib3==1.26.6', 'prettytable', 'bs4', 'pystyle', 'cfscrape'
+]
 
-class ApiZefoy:
-    def __init__(self) -> None:
-        self.zefoy = "https://zefoy.com/"
-        self.headers = {'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'}
+
+
+
+from bs4 import BeautifulSoup
+import html
+import os
+import hashlib
+import time
+import json
+import requests
+import pytz
+import random
+from datetime import datetime
+from time import sleep
+from colorama import Fore, Back, Style
+import base64
+import string
+from bs4 import BeautifulSoup
+import re
+from prettytable import PrettyTable
+from urllib.parse import urlparse, unquote, quote
+from string import ascii_letters, digits
+import threading
+import ctypes
+from random import choice
+from fake_useragent import UserAgent
+from urllib.parse import urlencode
+
+
+     
+
+
+def countdown(x):
+    RED = Fore.RED
+    RESET = '\033[0m'
+    print("\033[0;m\033[0;m\033[?25l", end="\r")
+    MSG = "ThầyÔngNội"
+    while x:
+        hrs, rem = divmod(x, 3600)
+        mins, secs = divmod(rem, 60)
+
+        time_format = f"{hrs:02} giờ {mins:02} phút {secs:02} giây"
+
+        # Nếu số giây ≤ 10, đổi màu thành đỏ
+        if secs <= 10:
+            print(f"\033[1;36m {MSG} {RED}{time_format}{RESET}", end='\r')
+        else:
+            print("\033[1;36m",MSG, time_format, end='\r')
+
+        time.sleep(1)
+        x -= 1
+
+    print("\033[0;m\033[?25h", end="\r")
+
+class Zefoy:
+    def __init__(self):
+        self.base_url = "https://zefoy.com/"
+        self.headers = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cache-Control": "max-age=0",
+            "Connection": "keep-alive",
+            "Host": "zefoy.com",
+            "sec-ch-ua": '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-Fetch-User": "?1",
+            "Upgrade-Insecure-Requests": "1",
+            "User-Agent": UserAgent().chrome,
+        }
         self.session = requests.Session()
-        self.captcha = {}
         self.captcha_1 = None
-        self.captcha_name = 'captcha_zefoy.png'
+        self.captcha_ = {}
+        self.service = "Views"
+        self.nameservice = []
+        self.video_key = None
         self.services = {}
-        self.services_ids = {}
+        self.services_ids = []
         self.services_status = {}
-        self.url = input(f"{anh}{trang}Nhập {tim}link {xanhnhat}video {xanh_duong}: {vang}")
-    
-    def get_captcha(self):
-        rq = self.session.get(self.zefoy, headers=self.headers).text
+        self.url = "None"
+        self.text = "Văn Anh Dz"
+        self.dem = 0
+        url1 = input("\033[1;37m Nhập \033[1;36mLink \033[1;35mVideo \033[1;34mTik \033[1;33mTok \033[1;32m:\033[1;31m ")
+        self.sessions = None
+        self.selected_cmt = None
+
+        self.url = url1
+        self.loading_flag = False
+
+    def loading(self, msg, mode):
+        print("\033[0;m\033[0;m\033[?25l", end="\r")
+        msg = "\033[1;36m\033[0;m " + msg
+        if not sys.platform.startswith("lin"):
+            mode = 2
+        while self.loading_flag:
+            if mode == 1:
+                print(f"{msg}\033[1;90m.\033[0;m ", end="\r")
+                time.sleep(0.15)
+                print(f"{msg}. ", end="\r")
+                time.sleep(0.15)
+
+                print(f"{msg}.\033[1;90m.\033[0;m ", end="\r")
+                time.sleep(0.15)
+                print(f"{msg}.. ", end="\r")
+                time.sleep(0.15)
+
+                print(f"{msg}..\033[1;90m.\033[0;m ", end="\r")
+                time.sleep(0.15)
+                print(f"{msg}... ", end="\r")
+                time.sleep(0.15)
+
+                print(f"{msg}    ", end="\r")
+                time.sleep(0.15)
+            elif mode == 2:
+                loading = ["⢿", "⣻", "⣽", "⣾", "⣷", "⣯", "⣟", "⡿"]
+                for i in loading:
+                    print(f"{msg} {i}    ", end="\r")
+                    time.sleep(0.2)
+            elif mode == 3:
+                loading = ["⢿", "⣻", "⣽", "⣾", "⣷", "⣯", "⣟", "⡿"]
+                for i in loading:
+                    print(f"{msg} {i}    ", end="\r")
+                    time.sleep(0.05)
+        print(
+            "\r\033[0;m\033[?25h"
+            + " " * __import__("shutil").get_terminal_size((80, 20)).columns,
+            end="\r",
+            flush=True,
+        )
+        # print("done !", end="\r")
+
+    def request(self, method, url, data=None, headers=None, msg="Đang Kết Nối", mode=1):
+        global loading_flag
+        self.loading_flag = True
+
+        # Start loading animation in a separate thread
+        t = threading.Thread(
+            target=self.loading,
+            args=(
+                msg,
+                mode,
+            ),
+        )
+        t.start()
+
         try:
-            for x in re.findall(r'<input type="hidden" name="(.*)" value="(.*)">', rq):
-                self.captcha[x[0]] = x[1]
-            self.captcha_1 = rq.split('type="text" name="')[1].split('" oninput="this.value=this.value.toLowerCase()"')[0]
-            captcha_url = rq.split('<img src="')[1].split('" onerror="imgOnError()" class="')[0]
-            rq = self.session.get(f"{self.zefoy}{captcha_url}",headers=self.headers).content
-            open(self.captcha_name, 'wb').write(rq)
-            print(f'{anh}Đang giải capcha...')
+            # Make the HTTP request
+            method = method.lower()  # Fix to use method.lower()
+            if method == "get":
+                response = self.session.get(url, data=data, headers=headers)
+            elif method == "post":
+                response = self.session.post(url, data=data, headers=headers)
+            else:
+                print("\nUnsupported HTTP method!")
+                return None
+
+            return response  # Return the response object
+
+        # except requests.exceptions.Timeout:
+        # print("\nRequest timed out!")
+        # except requests.exceptions.RequestException as e:
+        # print(f"\nRequest failed: {e}")
+        finally:
+            # Stop the loading animation
+            self.loading_flag = False
+            t.join()
+
+    def get_captcha(self):
+        try:
+            os.remove("captcha.png")
+        except:
+            pass
+        if self.sessions:
+            self.session.cookies.set("PHPSESSID", self.sessions, domain="zefoy.com")
+        request = self.request(
+            "GET", self.base_url, headers=self.headers, mode=1
+        )
+        if "Enter Video URL" in request.text:
+            self.video_key = request.text.split('" placeholder="Enter Video URL"')[
+                0
+            ].split('name="')[-1]
+            return True
+        # print (request.text)
+        try:
+            for x in re.findall(
+                '<input type="hidden" name="(.*)" value="(.*)">', request.text
+            ):
+                self.captcha_[x[0]] = x[1]
+            self.captcha_1 = request.text.split('type="text" name="')[1].split(
+                '" oninput="this.value=this.value.toLowerCase()"'
+            )[0]
+            captcha_url = request.text.split('<img src="')[1].split(
+                '" onerror="imgOnError()" class="'
+            )[0]
+            request = self.request(
+                "GET",
+                f"{self.base_url}{captcha_url}",
+                headers=self.headers,
+                msg="Đang Giải Captcha",
+                mode=2,
+            )
+            open("captcha.png", "wb").write(request.content)
+            # print(self.ice + ' Đang Giải Captcha..')
+
             return False
         except Exception as e:
-            print(f"{anh}{do}Không thể giải captcha: {e}")
+            print(f" Lỗi Khi Giải Captcha: {e}")
+
             time.sleep(2)
             self.get_captcha()
-    
-    def solve_captcha(self):
-        rq = self.session.post('https://api.ocr.space/parse/image?K87899142388957', headers={'apikey':'K87899142388957'}, files={'task':open(self.captcha_name,'rb')}).json()
-        solved_text = rq['ParsedResults'][0]['ParsedText'].replace('\n','').replace('\r','')
-        return solved_text
-    
-    def giai_captcha(self):
-        self.get_captcha()
-        giai_captcha = self.solve_captcha()
-        self.captcha[self.captcha_1] = giai_captcha
-        rq = self.session.post(self.zefoy, headers=self.headers, data=self.captcha).text
-        if 'Enter Video URL' in rq:
-            cookies = self.session.cookies.get('PHPSESSID')
-            self.session.cookies.update({'PHPSESSID': cookies})
-            print(f"{anh}Giải capcha thành công: {giai_captcha}")
-            self.video_key = rq.split('" placeholder="Enter Video URL"')[0].split('name="')[-1]
-    
+
+    def send_captcha(self, new_session=False):
+        if new_session:
+            self.session = requests.Session()
+            self.sessions = None
+            time.sleep(2)
+        if self.get_captcha():
+            print("Đang Kết Nối Tới Phiên Trước Đó...")
+            return (True, "The session already exists")
+        captcha_solve = self.solve_captcha("captcha.png")[1]
+        self.captcha_[self.captcha_1] = captcha_solve
+        request = self.session.post(
+            self.base_url, headers=self.headers, data=self.captcha_
+        )
+        if "Enter Video URL" in request.text:
+            print(" \033[1;33mPhiên Mới Đã Được Tạo.")
+
+            # open('session','w',encoding='utf-8').write(self.session.cookies.get('PHPSESSID'))
+            self.sessions = self.session.cookies.get("PHPSESSID")
+            print(f" \x1b[38;5;46mGiải Capcha Thành Công : {captcha_solve}")
+            print(
+            "\033[1;37m══════════════════════════════════════════════════════"
+        )
+
+            self.video_key = request.text.split('" placeholder="Enter Video URL"')[
+                0
+            ].split('name="')[-1]
+            return (True, captcha_solve)
+        else:
+            return (False, captcha_solve)
+
+    def solve_captcha(self, path_to_file=None, b64=None, delete_tag=["\n", "\r"]):
+        if path_to_file:
+            task = path_to_file
+        else:
+            open("temp.png", "wb").write(base64.b64decode(b64))
+            task = "temp.png"
+        request = self.session.post(
+            "https://api.ocr.space/parse/image?K87899142388957",
+            headers={"apikey": "K87899142388957"},
+            files={"task": open(task, "rb")},
+        ).json()
+        # print(request)
+        solved_text = request["ParsedResults"][0]["ParsedText"]
+        for x in delete_tag:
+            solved_text = solved_text.replace(x, "")
+        return (True, solved_text)
+
     def get_status_services(self):
-        rq = self.session.get(self.zefoy, headers=self.headers).text
-        for x in re.findall(r'<h5 class="card-title">.+</h5>\n.+\n.+', rq):
-            self.services[x.split('<h5 class="card-title">')[1].split('<')[0].strip()] = x.split('d-sm-inline-block">')[1].split('</small>')[0].strip()
-        for x in re.findall(r'<h5 class="card-title mb-3">.+</h5>\n<form action=".+">', rq):
-            self.services_ids[x.split('title mb-3">')[1].split('<')[0].strip()] = x.split('<form action="')[1].split('">')[0].strip()
-        for x in re.findall(r'<h5 class="card-title">.+</h5>\n.+<button .+', rq):
-            if 'disabled class' in x:
-                self.services_status[x.split('<h5 class="card-title">')[1].split('<')[0].strip()] = False
-            else:
-                self.services_status[x.split('<h5 class="card-title">')[1].split('<')[0].strip()] = True
+        request = self.request("GET", self.base_url, headers=self.headers).text
+        for x in re.findall('<h5 class="card-title">.+</h5>\n.+\n.+', request):
+            self.services[
+                x.split('<h5 class="card-title">')[1].split("<")[0].strip()
+            ] = (x.split('d-sm-inline-block">')[1].split("</small>")[0].strip())
+        for x in re.findall(
+            '<h5 class="card-title mb-3">.+</h5>\n<form action=".+">', request
+        ):
+            self.services_ids.append(
+                x.split('<form action="')[1].split('">')[0].strip()
+            )
+        for x in re.findall('<h5 class="card-title">.+</h5>\n.+<button .+', request):
+            self.services_status[
+                x.split('<h5 class="card-title">')[1].split("<")[0].strip()
+            ] = (False if "disabled class" in x else True)
         return (self.services, self.services_status)
 
-    def get_table(self):
-        i = 1
-        table = PrettyTable(field_names=["ID", "DỊCH VỤ", "Status"], title="Status Services", header_style="upper",border=True)
+    def get_table(self, i=1):
+ 
         while True:
-            if len(self.get_status_services()[0])>1:
+            if len(self.get_status_services()[0]) > 1:
                 break
             else:
-                print(f'{anh}{do}Không có sever nào hoạt động. Thử lại...')
-                self.giai_captcha()
-                time.sleep(3)
+                print("\033[1;31m Không Thể Get Dịch Vụ, Đang Thử Lại...",end='\r');sleep(1); print('                                                        ', end = '\r')
+                self.send_captcha()
+                time.sleep(2)
         for service in self.services:
-            table.add_row([f"{trang}{Fore.CYAN}{i}{Fore.RESET}", service, f"{Fore.GREEN if 'ago updated' in self.services[service] else Fore.RED}{self.services[service]}{Fore.RESET}"])
-            i+=1
-        table.title =  f"{Fore.YELLOW}Số Dịch Vụ Hoạt Động: {len([x for x in self.services_status if self.services_status[x]])}{Fore.RESET}"
-        os.system("cls" if os.name == "nt" else "clear")
-        print(banner)
-        print(table)
+            status_color = (
+                Fore.GREEN if "ago updated" in self.services[service] else Fore.RED
+            )
+            
+            print(
+                f" \033[1;36m⟨{i}⟩\033[0m {service} \033[1;37m[\x1b[38;5;46m➜\033[1;37m] {status_color}{self.services[service]}{Fore.RESET}"
+            )
+            self.nameservice.append(service)
+            i += 1
+
+        # In số lượng dịch vụ hoạt động
+        active_services_count = len(
+            [x for x in self.services_status if self.services_status[x]]
+        )
+        # print(f"{Fore.YELLOW}Số Dịch Vụ Hoạt Động: {active_services_count}{Fore.RESET}")
+        print(
+            "\033[1;37m══════════════════════════════════════════════════════"
+        )
+        #print(self.services)
         while True:
-            self.service = int(input(f"{anh}Nhập số:{trang} "))-1
-            if self.service > len(self.services_status)-1 or self.service < 0:
-                print(f"{anh}{do}Bạn nhập sai số!")
+            try:
+                choice = int(input(" Lên Dịch Vụ Nào Ae : \033[1;36m")) - 1
+                self.urlbufff = self.services_ids[choice]
+                self.service = self.nameservice[choice]
+                # print(self.urlbufff)
+                break
+            except:
+                print("\033[1;31m Vui Lòng Chọn Đúng Dịch Vụ!!")
+                print(
+            "\033[1;37m══════════════════════════════════════════════════════"
+        )
+                continue
+
+    def find_video(self):
+        if self.service is None:
+            return (False, "You didn't choose the service")
+        while True:
+            if self.service not in self.services_ids:
+                self.get_status_services()
+                time.sleep(1)
+            # request=self.session.post(f'{self.base_url}{self.urlbufff}',headers={'content-type':'multipart/form-data; boundary=----WebKitFormBoundary0nU8PjANC8BhQgjZ','user-agent':self.headers['User-Agent'],'origin':'https://zefoy.com'},data=f'------WebKitFormBoundary0nU8PjANC8BhQgjZ\r\nContent-Disposition: form-data; name="{self.video_key}"\r\n\r\n{self.url}\r\n------WebKitFormBoundary0nU8PjANC8BhQgjZ--\r\n')
+            request = self.session.post(
+                f"{self.base_url}{self.urlbufff}",
+                headers={
+                    "Origin": "https://zefoy.com",
+                    "User-Agent": self.headers["User-Agent"],
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                data={self.video_key: self.url},
+            )
+            try:
+                self.video_info = base64.b64decode(
+                    unquote(request.text.encode()[::-1])
+                ).decode()
+            except:
+                time.sleep(3)
+                continue
+            # print(self.video_info)
+            if "Session expired. Please re-login" in self.video_info:
+                print(" Phiên Hết Hạn. Đang Đăng Nhập Lại...")
+                self.send_captcha()
+                return
+            elif "service is currently not working" in self.video_info:
+                return (True, "\033[1;31mDịch Vụ Hiện Không Hoạt Động...")
+            elif 'onsubmit="showHideElements' in self.video_info:
+                self.video_info = [
+                    self.video_info.split('" name="')[1].split('"')[0],
+                    self.video_info.split('value="')[1].split('"')[0],
+                ]
+                return (True, request.text)
+            elif "Checking Timer..." in self.video_info:
+                try:
+                    t = int(re.findall("ltm=(\\d*);", self.video_info)[0])
+                    lamtilo = int(re.findall("ltm=(\\d*);", self.video_info)[0])
+                except:
+                    return (False,)
+                if lamtilo == 0:
+                    self.find_video()
+                elif lamtilo >= 1000:
+                    print(
+                        " \033[1;31mBạn Bị Zefoy Tăng Delay!!! Do 1 Link Buff 1 Loại Nhiều Lần!!"
+                    )
+
+                
+                countdown(lamtilo)
+                # _ = time.time()
+                # while time.time() - 2 < _ + lamtilo:
+                    # t -= 1
+                    # if t < 0:
+                        # t = 0
+                        # print("...           VuHoangPro.Site ", end="\r")
+                    # print("\033[0;m{0}".format(t) + "          ", end="\r")
+                    # time.sleep(1)
+                continue
+            elif "Too many requests. Please slow" in self.video_info:
+                time.sleep(3)
+            elif "No an comment found" in self.video_info:
+                print(self.video_info)
+                time.sleep(3)
+                continue
             else:
-                ten_chedo = list(self.services.keys())
-                self.service = ten_chedo[self.service]
-                if self.services_status[self.service]:
+                print(self.video_info)
+
+    def find_cmt(self):
+        if self.service is None:
+            return (False, "You didn't choose the service")
+        while True:
+            if self.service not in self.services_ids:
+                self.get_status_services()
+                time.sleep(1)
+            # request=self.session.post(f'{self.base_url}{self.urlbufff}',headers={'content-type':'multipart/form-data; boundary=----WebKitFormBoundary0nU8PjANC8BhQgjZ','user-agent':self.headers['User-Agent'],'origin':'https://zefoy.com'},data=f'------WebKitFormBoundary0nU8PjANC8BhQgjZ\r\nContent-Disposition: form-data; name="{self.video_key}"\r\n\r\n{self.url}\r\n------WebKitFormBoundary0nU8PjANC8BhQgjZ--\r\n')
+            request = self.session.post(
+                f"{self.base_url}{self.urlbufff}",
+                headers={
+                    "Origin": "https://zefoy.com",
+                    "User-Agent": self.headers["User-Agent"],
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                data={self.video_info[0]: self.video_info[1]},
+            )
+            try:
+                self.video_info = base64.b64decode(
+                    unquote(request.text.encode()[::-1])
+                ).decode()
+            except:
+                time.sleep(3)
+                continue
+            # print(self.video_info)
+            if "Session expired. Please re-login" in self.video_info:
+                print(" Phiên Hết Hạn. Đang Đăng Nhập Lại...")
+                self.send_captcha()
+                return
+            elif "service is currently not working" in self.video_info:
+                return (True, "\033[1;31mDịch Vụ Hiện Không Hoạt Động...")
+            elif 'onsubmit="showHideElements' in self.video_info:
+                found = None
+                for input_tag in (
+                    BeautifulSoup(self.video_info, "html.parser")
+                    .find("form")
+                    .find_all("input", type="hidden")
+                ):
+                    wryhb = input_tag.get("name")
+                    vitws = input_tag.get("value")
                     break
-                else:
-                    print(f"{anh}Chế độ không hoạt động!")
-    
+                for i in range(1, 9):
+                    if i > 8:
+                        break
+                    # Đọc nội dung HTML từ file
+                    html_content = self.video_info
+
+                    # Phân tích HTML với BeautifulSoup
+                    soup = BeautifulSoup(html_content, "html.parser")
+
+                    # Tìm các đoạn văn bản mong muốn
+                    messages = soup.find_all(
+                        "span", class_="text-dark font-weight-bold"
+                    )
+
+                    # Đặt câu comment bạn muốn tìm
+                    # selected_cmt = None
+                    if not self.selected_cmt:
+                        print(
+                            f" Lấy Sau Dấu Hai Chấm @Username: Và Không Phải Là Cmt Reply !"
+                        )
+                        self.selected_cmt = input(
+                            " Nhập Comment Cần Buff: \033[1;36m"
+                        )
+                        print(
+            "\033[1;37m══════════════════════════════════════════════════════"
+        )
+                    inputs_found = []
+
+                    # Tìm các thẻ input liên quan đến comment đã chọn
+                    for message in messages:
+                        if message.get_text().strip() == self.selected_cmt:
+                            # Tìm các thẻ input đi sau bình luận này
+                            next_inputs = message.find_next_siblings(
+                                "input", {"type": "hidden", "name": True, "value": True}
+                            )
+                            for input_tag in next_inputs:
+                                inputs_found.append(input_tag)
+
+                    # In các giá trị của name và value từ các thẻ input đã tìm thấy
+                    self.cmt_info = []
+                    for idx, input_tag in enumerate(inputs_found, start=1):
+                        name_value = input_tag.get("name")
+                        value_value = input_tag.get("value")
+                        # print(f"{idx}. Name: {name_value}, Value: {value_value}")
+                        self.cmt_info.append(name_value)
+                        self.cmt_info.append(value_value)
+                    if len(self.cmt_info) == 0:
+                        print(self.ice + f" Searching On Page {i}... ", end="\r")
+                        request = self.session.post(
+                            f"{self.base_url}{self.urlbufff}",
+                            headers={
+                                "Origin": "https://zefoy.com",
+                                "User-Agent": self.headers["User-Agent"],
+                                "X-Requested-With": "XMLHttpRequest",
+                            },
+                            data={wryhb: vitws, "nums": i},
+                        )
+                        try:
+                            self.video_info = base64.b64decode(
+                                unquote(request.text.encode()[::-1])
+                            ).decode()
+                            continue
+                        except:
+                            time.sleep(3)
+                            continue
+                    else:
+                        found = True
+                        break
+                    # print(self.cmt_info)
+                    # self.cmt_info = [{self.cmt_info[0]: self.cmt_info[1]}, {self.cmt_info[2]: self.cmt_info[3]}]
+                    # print(self.cmt_info)
+
+                    # self.video_info=[self.video_info.split('" name="')[1].split('"')[0],self.video_info.split('value="')[1].split('"')[0]]
+                if not found:
+                    print(
+                        f" \033[1;31mKhông Tìm Thấy Comment, Không Tồn Tại, Bị Ẩn Hoặc Là CMT Trả Lời !"
+                    )
+                    self.selected_cmt = None
+                    return (False,)
+                return (True, request.text)
+            elif "Checking Timer..." in self.video_info:
+                try:
+                    t = int(re.findall("ltm=(\\d*);", self.video_info)[0])
+                    lamtilo = int(re.findall("ltm=(\\d*);", self.video_info)[0])
+                except:
+                    return (False,)
+                if lamtilo == 0:
+                    self.find_video()
+                elif lamtilo >= 1000:
+                    print(
+                        " \033[1;31mBạn Bị Zefoy Tăng Delay!!! Do 1 Link Buff 1 Loại Nhiều Lần!!"
+                    )
+
+                countdown(lamtilo)
+                # _ = time.time()
+                # while time.time() < _ + lamtilo:
+                    # t -= 1
+                    # if t < 0:
+                        # t = 0
+                        # print("...           VuHoangPro.Site ", end="\r")
+                    # print("\033[0;m{0}".format(t) + "          ", end="\r")
+                    # time.sleep(1)
+                continue
+            elif "Too many requests. Please slow" in self.video_info:
+                time.sleep(3)
+            else:
+                print(self.video_info)
+
     def use_service(self):
         if self.find_video()[0] is False:
             return False
-        self.token = "".join(random.choices(ascii_letters+digits, k=16))
-        request = self.session.post(f'{self.zefoy}{self.services_ids[self.service]}', headers={'content-type':f'multipart/form-data; boundary=----WebKitFormBoundary{self.token}', 'user-agent':self.headers['user-agent'], 'origin':'https://zefoy.com'}, data=f'------WebKitFormBoundary{self.token}\r\nContent-Disposition: form-data; name="{self.video_info[0]}"\r\n\r\n{self.video_info[1]}\r\n------WebKitFormBoundary{self.token}--\r\n')
+        if self.urlbufff == "c2VuZC9mb2xsb3dlcnNfdGlrdG9r":
+            if self.find_cmt()[0] is False:
+                return False
+        self.token = "".join(random.choices(ascii_letters + digits, k=16))
+        # request=self.session.post(f'{self.base_url}{self.urlbufff}',headers={'content-type':f'multipart/form-data; boundary=----WebKitFormBoundary{self.token}','user-agent':self.headers['User-Agent'],'origin':'https://zefoy.com'},data=f'------WebKitFormBoundary{self.token}\r\nContent-Disposition: form-data; name="{self.video_info[0]}"\r\n\r\n{self.video_info[1]}\r\n------WebKitFormBoundary{self.token}--\r\n')
+        if self.urlbufff == "c2VuZC9mb2xsb3dlcnNfdGlrdG9r":
+            request = self.session.post(
+                f"{self.base_url}c2VuZC9mb2xsb3dlcnNfdGlrdG9r",
+                headers={
+                    "Origin": "https://zefoy.com",
+                    "User-Agent": self.headers["User-Agent"],
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                data={
+                    self.cmt_info[0]: self.cmt_info[1],
+                    self.cmt_info[2]: self.cmt_info[3],
+                },
+            )
+        else:
+            request = self.request(
+                "POST",
+                f"{self.base_url}{self.urlbufff}",
+                headers={
+                    "Origin": "https://zefoy.com",
+                    "User-Agent": self.headers["User-Agent"],
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                data={self.video_info[0]: self.video_info[1]},
+                msg=f"Tiến Hành Tăng {self.service}",
+                mode=1,
+            )
         try:
             res = base64.b64decode(unquote(request.text.encode()[::-1])).decode()
         except:
             time.sleep(3)
             return ""
-        if 'Session expired. Please re-login' in res:
-            print(f'{anh}{do}Phiên hết hạn. Đang đăng nhập lại...')
-            self.giai_captcha()
+        # print(res)
+        if "Session expired. Please re-login" in res:
+            print(" Phiên Hết Hạn. Đang Đăng Nhập Lại...")
+            self.send_captcha()
             return ""
-        elif 'Too many requests. Please slow' in res:
+        elif "Too many requests. Please slow" in res:
             time.sleep(3)
-        elif 'service is currently not working' in res:
-            return (f'{anh}Dịch vụ hiện không hoạt động, hãy thử lại sau. | Bạn có thể thay đổi nó trong cấu hình.')
+        elif "service is currently not working" in res:
+            return "\033[1;31mDịch Vụ Hiện Không Hoạt Động..."
         else:
-            print(res.split("sans-serif;text-align:center;color:green;'>")[1].split("</")[0])
-    
-    def find_video(self):
-        if self.service is None:
-            return False, "You didn't choose the service"
-        while True:
-            if self.service not in self.services_ids:
-                self.get_status_services()
-                time.sleep(1)
-            request = self.session.post(f'{self.zefoy}{self.services_ids[self.service]}', headers={'content-type':'multipart/form-data; boundary=----WebKitFormBoundary0nU8PjANC8BhQgjZ', 'user-agent':self.headers['user-agent'], 'origin':'https://zefoy.com'}, data=f'------WebKitFormBoundary0nU8PjANC8BhQgjZ\r\nContent-Disposition: form-data; name="{self.video_key}"\r\n\r\n{self.url}\r\n------WebKitFormBoundary0nU8PjANC8BhQgjZ--\r\n')
-            try:
-                self.video_info = base64.b64decode(unquote(request.text.encode()[::-1])).decode()
-            except:
-                time.sleep(3)
-                continue
-            if 'Session expired. Please re-login' in self.video_info:
-                print(f'{anh}Phiên hết hạn. Đang đăng nhập lại...')
-                self.giai_captcha()
-                return
-            elif 'service is currently not working' in self.video_info:
-                return True,f'{vua}Dịch vụ hiện không hoạt động, hãy thử lại sau. | Bạn có thể thay đổi nó trong cấu hình.'
-            elif """onsubmit="showHideElements""" in self.video_info:
-                self.video_info = [self.video_info.split('" name="')[1].split('"')[0],self.video_info.split('value="')[1].split('"')[0]]
-                return True, request.text
-            elif 'Checking Timer...' in self.video_info:
-                try: 
-                    t=int(re.findall(r'ltm=(\d*);', self.video_info)[0])
-                    lamtilo = int(re.findall(r'ltm=(\d*);', self.video_info)[0])
-                except: 
-                    return (False,)
-                if lamtilo==0:self.find_video()
-                elif lamtilo >= 1000: print(f'{anh}Your IP was banned')
-                _=time.time()
-                while time.time()-2<_+lamtilo:
-                    t-=1
-                    print(f"{z} {n}{do}Vui lòng chờ {vang}:{trang} {t} {do}giây{xanhnhat}.{tim}.{xanh_duong}.{xanh_la}{e}", end="\r")
-                    time.sleep(1)
-                continue
-            elif 'Too many requests. Please slow' in self.video_info:
-                time.sleep(3)
-            else:
-                print(self.video_info)
+            self.dem += 1
+            print(
+                f"\033[1;36m{self.dem}"
+                + f" \033[1;37m[\033[1;36mThành Công\033[1;37m] "
+                +"\033[1;36m"
+                + res.split("sans-serif;text-align:center;color:green;'>")[1].split(
+                    "</"
+                )[0]
+            +f"\033[1;37m {self.url}")
+        
 
-Z = ApiZefoy()
-Z.giai_captcha()
-Z.get_table()
-while True:
-    try: 
-        if 'Service is currently not working, try again later' in str(Z.use_service()):
-            print(f'{vua}Dịch vụ hiện không hoạt động, hãy thử lại sau. | Bạn có thể thay đổi nó trong cấu hình.')
+    def get_video_info(self):
+        request = self.request(
+            "GET",
+            f'https://tiktok.livecounts.io/video/stats/{urlparse(self.url).path.rpartition("/")[2]}',
+            headers={
+                "authority": "tiktok.livecounts.io",
+                "origin": "https://livecounts.io",
+                "user-agent": self.headers["User-Agent"],
+            },
+        ).json()
+        if "likeCount" in request:
+            return request
+        else:
+            return {"viewCount": 0, "likeCount": 0, "commentCount": 0, "shareCount": 0}
+
+    def get_video_id(self, url_=None, set_url=True):
+        if url_ is None:
+            url_ = self.url
+        if url_[-1] == "/":
+            url_ = url_[:-1]
+        url = urlparse(url_).path.rpartition("/")[2]
+        if url.isdigit():
+            self.url = url_
+            return url_
+        request = requests.get(
+            f"https://api.tokcount.com/?type=videoID&username=https://vm.tiktok.com/{url}",
+            headers={
+                "origin": "https://tokcount.com",
+                "authority": "api.tokcount.com",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
+            },
+        )
+        if request.text == "":
+            print(" Link Video Không Hợp Lệ !")
+            return False
+        else:
+            json_ = request.json()
+        if "author" not in json_:
+            print(f"\033[0;m{self.url} ~> Link Video Không Hợp Lệ!")
+            return False
+        if set_url:
+            self.url = f'https://www.tiktok.com/@{json_["author"]}/video/{json_["id"]}'
+            print(f"Formated video url --> {self.url}")
+
+        return request.text
+
+    def check_config(self):
+        while True:
+            try:
+                last_url = self.url
+                if last_url != self.url:
+                    self.get_video_id()
+            except Exception as e:
+                print(e)
+
+            time.sleep(4)
+
+    def update_name(self):
+        while True:
+            try:
+                ctypes.windll.kernel32.SetConsoleTitleA(self.text.encode())
+                video_info = self.get_video_info()
+                # self.text=f"[hoàng tool]</> | Hearts: {like_info['likeCount']} "
+                self.text = (
+                    "Văn Anh Dz"
+                )
+            except:
+                pass
             time.sleep(5)
-    except Exception as e:
-        print(f'{vua}{do}LỖI NGHIÊM TÚC | thử lại sau 10 giây.|| {e}');time.sleep(10)
+
+
+def main():
+    try:
+        os.remove("captcha.png")
+    except:
+        pass
+    xam = "\033[1;90m"
+    do = "\033[1;91m"
+    thanhgach = (
+        "\033[1;97m══════════════════════════════════════════════════════"
+    )
+    
+    #
+    Z = Zefoy()
+    threading.Thread(target=Z.check_config).start()
+    threading.Thread(target=Z.update_name).start()
+    Z.send_captcha()
+    Z.get_table()
+    total_view = 0
+    print(thanhgach)
+    while True:
+        try:
+            if "Service is currently not working, try again later" in str(
+                Z.use_service()
+            ):
+                print(
+                    "\033[1;31mDịch Vụ Hiện Tại Không Hoạt Động, Hãy Thử Lại Sau."
+                )
+                time.sleep(5)
+        except Exception as e:
+            print("Lỗi: " + str(e), end = '\r'); sleep(1); print('                                                   ', end = '\r')
+
+
+main()
