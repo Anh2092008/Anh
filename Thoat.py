@@ -116,7 +116,7 @@ while True:
 
     # Check if the entered key matches
     if inputkey == key:
-        print('{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;32mKey Đúng \033[1;37m] ', end='\r')
+        print(f'{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;32mKey Đúng \033[1;37m] ', end='\r')
         sleep(1)
         print(' ' * 60, end='\r')
         
