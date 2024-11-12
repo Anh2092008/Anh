@@ -209,7 +209,7 @@ if chon == '1':
 elif chon == '2':
     exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Zefoy').text)
 elif chon == '3':
-    exec(requests.get('').text)
+    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Golikelinkedin').text)
 elif chon == '4':
     exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Share%20Ao').text)
 else:
