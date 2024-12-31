@@ -121,10 +121,7 @@ def LINKEDIN():
             readfile = open('cookie_linkedin.txt','r')
             COOKIELINK = readfile.read()
             
-            readfile.close()
-        print(f'{zuo}=============================================')
-        print(f'{vang}\033[1;33mTài Khoản : {vo}'+username)
-        print(f'{vang}\033[1;33mTổng Tiền : \033[1;32m'+str(coin)+'vnđ')
+            readfile.close()     
         print(f'{zuo}=============================================')
         choose = int(input('\033[1;33mNhập Số Lượng Job : \033[1;90m'))
         DELAY = int(input('\033[1;33mNhập Delay : \033[1;90m'))
@@ -662,9 +659,7 @@ if checkfile == False:
     file = readfile.read()
     readfile.close()
 else:
-            
-            ip = requests.get('https://kiemtraip.com/raw.php').text
-            print(f'                 {luc}IP : {buom}{ip}') 
+             
             print(f'                 {z3}Danh Sách Tài Khoản ')
             print(f'{zuo}=============================================')
             LINKEDIN()
