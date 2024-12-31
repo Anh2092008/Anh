@@ -105,7 +105,8 @@ def dsacc():
         quit()
 
     for i in range(len(chontktiktok["data"])):
-        print(f'\033[1;36m{i+1} \033[1;35m➩ {z3}Tên Tài Khoản┊\033[1;32m :\033[1;93m {chontktiktok["data"][i]["nickname"]}')
+        print(f'\033[1;36m{i+1} {z3}Tên TK \033[1;30m :\033[1;38;5;213m {chontktiktok["data"][i]["nickname"]}')
+        print(f"{z3}Trạng Thái \033[1;30m: \033[1;38;5;81mHoạt Động")
 
 dsacc()
 
@@ -118,7 +119,7 @@ while True:
         account_id = chontktiktok["data"][luachon - 1]["id"]
         break
     except:
-        print("Sai định dạng!")
+        print(f"{red}Sai định dạng !{e}")
 
 # Nhập thông số delay và số lần đổi tài khoản
 while True:
@@ -126,7 +127,7 @@ while True:
         delay = int(input("Nhập delay (giây): "))
         break
     except:
-        print("Sai định dạng!")
+        print(f"{red}Sai định dạng !{e}")
 
 while True:
     try:
