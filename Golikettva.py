@@ -105,8 +105,8 @@ def dsacc():
         quit()
 
     for i in range(len(chontktiktok["data"])):
-        print(f'\033[1;36m{i+1} {z3}Tên TK \033[1;30m :\033[1;38;5;213m {chontktiktok["data"][i]["nickname"]}')
-        print(f"{z3}Trạng Thái \033[1;30m: \033[1;38;5;81mHoạt Động")
+        print(f'\033[1;36m{i+1} {z3}Tên TK \033[1;30m :\033[1;38;5;196m {chontktiktok["data"][i]["nickname"]}')
+        print(f"{z3}Trạng Thái \033[1;30m: \033[1;38;5;46mHoạt Động")
 
 dsacc()
 
