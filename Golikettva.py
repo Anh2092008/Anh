@@ -112,10 +112,9 @@ dsacc()
 # Người dùng chọn tài khoản TikTok
 while True:
     try:
-        luachon = int(input(f"{trang}Chọn tài khoản để chạy: {luc}"))
+        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
         while luachon > len(chontktiktok["data"]):
-        	print(f"{red}Chọn Acc Sai Hoặc Gặp Lỗi hãy chọn lại")
-            luachon = int(input(f"{vang}Chọn tài khoản để chạy: {luc}")
+            luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
         account_id = chontktiktok["data"][luachon - 1]["id"]
         break
     except:
@@ -201,10 +200,9 @@ while True:
                 dsacc()  # List available accounts again
                 while True:
                     try:
-                        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {luc}"))
+                        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
                         while luachon > len(chontktiktok["data"]):
-                        	print(f"{red}Chọn Acc Sai Hoặc Gặp Lỗi hãy chọn lại")
-                            luachon = int(input(f"{vang}Chọn tài khoản để chạy: {luc}")
+                            luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
                         account_id = chontktiktok["data"][luachon - 1]["id"]
                         checkdoiacc = 0  # Reset error count for new account
                         break
