@@ -101,20 +101,21 @@ chontktiktok = chonacc()
 
 def dsacc():
     if chontktiktok["status"] != 200:
-        print(f"{n}Authorization hoặc Token không hợp lệ!{e}")
+        print(f"{red}Authorization hoặc Token không hợp lệ!{e}")
         quit()
 
     for i in range(len(chontktiktok["data"])):
-        print(f'\033[1;36m[{i+1}] \033[1;35m➩ \033[1;97mTên Tài Khoản┊\033[1;32m :\033[1;93m {chontktiktok["data"][i]["nickname"]}')
+        print(f'\033[1;36m{i+1} \033[1;35m➩ {z3}Tên Tài Khoản┊\033[1;32m :\033[1;93m {chontktiktok["data"][i]["nickname"]}')
 
 dsacc()
 
 # Người dùng chọn tài khoản TikTok
 while True:
     try:
-        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
+        luachon = int(input(f"{trang}Chọn tài khoản để chạy: {luc}"))
         while luachon > len(chontktiktok["data"]):
-            luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
+        	print(f"{red}Chọn Acc Sai Hoặc Gặp Lỗi hãy chọn lại")
+            luachon = int(input(f"{vang}Chọn tài khoản để chạy: {luc}")
         account_id = chontktiktok["data"][luachon - 1]["id"]
         break
     except:
@@ -188,21 +189,22 @@ while True:
     if checkdoiacc >= doiacc:
         print(f"{red}Tài khoản {chontktiktok['data'][luachon - 1]['nickname']} đã gặp quá nhiều lỗi!{e}")
         while True:
-            print("Nhập 1 Để Chạy Lại Acc")
-            print("Nhập 2 Để Thay Acc")
-            print("Nhập 3 Để thoát Tool")
-            choice = input(f"Lựa Chọn : ")
+            print(f"{trang}Nhập {luc}1 {trang}Để Chạy Lại Acc")
+            print(f"{trang}Nhập {luc}2 {trang}Để Thay Acc")
+            print(f"{trang}Nhập {luc}3 {trang}Để thoát Tool")
+            choice = input(f"{trang}Lựa Chọn : {luc}")
             if choice == '1':
-                print("Tiếp tục với tài khoản này...")
+                print(f"{trang}Tiếp tục với tài khoản này...")
                 checkdoiacc = 0  # Reset error count for this account
                 break
             elif choice == '2':
                 dsacc()  # List available accounts again
                 while True:
                     try:
-                        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
+                        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {luc}"))
                         while luachon > len(chontktiktok["data"]):
-                            luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
+                        	print(f"{red}Chọn Acc Sai Hoặc Gặp Lỗi hãy chọn lại")
+                            luachon = int(input(f"{vang}Chọn tài khoản để chạy: {luc}")
                         account_id = chontktiktok["data"][luachon - 1]["id"]
                         checkdoiacc = 0  # Reset error count for new account
                         break
