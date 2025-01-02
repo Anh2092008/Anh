@@ -126,6 +126,7 @@ def LINKEDIN():
         choose = int(input('\033[1;33mNhập Số Lượng Job : \033[1;90m'))
         DELAY = int(input('\033[1;33mNhập Delay : \033[1;90m'))
         NVA = int(input('\033[1;33mNhập Delay Nghỉ Khi Hết Job \033[1;31m(\033[1;32mgiây\033[1;31m) \033[1;33m: \033[1;90m'))
+        max_job_count = int(input('\033[1;33mNhập Hết Job Bao Lần Thì Nghỉ \033[1;33m: \033[1;90m'))
         print(f'{zuo}=============================================')
         for i in range(choose):
                 url2 = 'https://gateway.golike.net/api/advertising/publishers/linkedin/jobs?account_id='+str(account_id)+'&data=null'
@@ -622,8 +623,7 @@ f"{red} Thả Like\033[1;31m\033[1;32m\033[1;32m\033[1;97m "
                                             f"{trang}success\033[1;31m\033[1;97m  "
 f"{red} Thả Like\033[1;31m\033[1;32m\033[1;32m\033[1;97m "                                                                         
                                             f"{tim}  Ẩn ID\033[1;97m \033[1;97m \033[1;32m+{prices} \033[1;97m "
-                                            f"{cyan}{tong}"
-                                            
+                                            f"{cyan}{tong}"                                            
                                         )
                                         print(chuoi) 
                         else:
@@ -645,11 +645,26 @@ f"{red} Thả Like\033[1;31m\033[1;32m\033[1;32m\033[1;97m "
                                     'data': 'null',
                                     'type': type,
                                     }   
-                else:       
-                    print(f'{zuo}Hết Job Cho nghỉ 30 phút !')
-                    
-                    countdown(NVA)
+                # Biến đếm số lần hết job  # Số lần tối đa cho phép hết job trước khi dừng tool
+job_count = 0  # Biến đếm số lần hết job
 
+# Hàm countdown (giả sử bạn đã định nghĩa hàm này)
+def countdown(time):
+    # Đoạn mã countdown ở đây
+    pass
+
+# Giả sử phần mã này đang thực thi một công việc
+while True:  # Vòng lặp chính của công cụ
+    # Kiểm tra nếu hết job
+    if job_is_done:  # Điều kiện xác định hết job
+        job_count += 1  # Tăng số lần hết job
+        print(f'{zuo} Hết Job Cho nghỉ 30 phút!')
+        countdown(NVA)  # Gọi hàm countdown nghỉ 30 phút
+
+        # Kiểm tra nếu đã đạt số lần tối đa hết job
+        if job_count >= max_job_count:
+            print(f"Đã hết job {max_job_count} lần, dừng công cụ.")
+            break  # Dừng công cụ
 checkfile = os.path.isfile('Authorization.txt')
 if checkfile == False:
     createfile = open('Authorization.txt','w')
@@ -658,9 +673,7 @@ if checkfile == False:
     readfile = open('Authorization.txt','r')
     file = readfile.read()
     readfile.close()
-else:
-             
+else:             
             print(f'                 {z3}Danh Sách Tài Khoản ')
             print(f'{zuo}=============================================')
-            LINKEDIN()
-                
+            LINKEDIN()                
