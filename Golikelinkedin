@@ -649,7 +649,7 @@ f"{red} Thả Like\033[1;31m\033[1;32m\033[1;32m\033[1;97m "
                     print(f'{zuo}Hết Job Cho nghỉ 30 phút !')
                     
                     countdown(NVA)
-            
+
 checkfile = os.path.isfile('Authorization.txt')
 if checkfile == False:
     createfile = open('Authorization.txt','w')
@@ -657,11 +657,10 @@ if checkfile == False:
     createfile.close()
     readfile = open('Authorization.txt','r')
     file = readfile.read()
-    readfile.c
-lose()
-else:             
+    readfile.close()
+else:
+             
             print(f'                 {z3}Danh Sách Tài Khoản ')
             print(f'{zuo}=============================================')
-          
-  LINKEDIN()    
-            
+            LINKEDIN()
+                
