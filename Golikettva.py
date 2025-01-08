@@ -95,7 +95,8 @@ def baoloi(ads_id, object_id, account_id, loai):
         'type': loai,
     }
     requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs', headers=headers, json=json_data)
-
+loat = int(input("Nhập delay (giây): "))
+thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
 # Lấy danh sách tài khoản TikTok
 chontktiktok = chonacc()
 
@@ -124,14 +125,14 @@ while True:
 # Nhập thông số delay và số lần đổi tài khoản
 while True:
     try:
-        delay = int(input("Nhập delay (giây): "))
+        delay = loat
         break
     except:
         print(f"{red}Sai định dạng !{e}")
 
 while True:
     try:
-        doiacc = int(input("Nhập số lần lỗi để đổi tài khoản: "))
+        doiacc = thay
         break
     except:
         print("Nhập một số hợp lệ!")
@@ -179,7 +180,7 @@ while True:
             dem += 1
             tien = nhantien["data"]["prices"]
             tong += tien
-            print(f"{dem}   {tien}   {tong} ")
+            print (Colorate.Diagonal(Colors.cyan_to_green, "{dem}   {tien}   {tong} "))
             checkdoiacc = 0
         else:
             baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
