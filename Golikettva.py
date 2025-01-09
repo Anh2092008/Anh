@@ -1,179 +1,136 @@
-import requests, os, time
-from time import sleep
+import requests
+import os
+import time
 from prettytable import PrettyTable
 
-# Màu sắc
-den = "\033[1;90m"
-luc = "\033[1;32m"
-trang = "\033[1;37m"
-red = "\033[1;31m"
-vang = "\033[1;33m"
-tim = "\033[1;35m"
-lamd = "\033[1;34m"
-lam = "\033[1;36m"
-hong = "\033[1;95m"
-n = "\033[1;3m\033[1;38m"
-e = "\033[0m"
-
-# Kiểm tra hoặc tạo file lưu Authorization và token
-try:
-    open("Authorization.txt", "x").close()
-    open("token.txt", "x").close()
-    open("cookie_linkedin.txt", "x").close()
-except:
-    pass
-
-# Đọc giá trị Authorization và token từ file
-try:
-    with open("Authorization.txt", "r") as auth_file:
-        authorization = auth_file.read().strip()
-    with open("token.txt", "r") as token_file:
-        token = token_file.read().strip()
-except FileNotFoundError:
-    print(f"{red}Không tìm thấy file Authorization.txt hoặc token.txt!{e}")
-    quit()
-
-# Kiểm tra giá trị Authorization và token
-if not authorization or not token:
-    print(f"{red}Authorization hoặc token không được để trống!{e}")
-    quit()
-
-# Headers cho request
-headers = {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json;charset=utf-8',
-    'Authorization': authorization,
-    't': token,
-    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
-    'Referer': 'https://app.golike.net/account/manager/tiktok',
+# Màu sắc terminal
+colors = {
+    "reset": "\033[0m",
+    "red": "\033[1;31m",
+    "green": "\033[1;32m",
+    "yellow": "\033[1;33m",
+    "blue": "\033[1;34m",
+    "magenta": "\033[1;35m",
+    "cyan": "\033[1;36m",
+    "white": "\033[1;37m",
 }
 
-# Lấy danh sách tài khoản TikTok
-def chonacc():
+# Hiển thị banner
+def display_banner():
+    banner = f"{colors['green']}== TikTok Account Manager ==" + colors['reset']
+    os.system("clear")
+    print(banner)
+
+# Lấy thông tin từ file hoặc yêu cầu nhập từ người dùng
+def get_credentials():
     try:
-        response = requests.get('https://gateway.golike.net/api/tiktok-account', headers=headers)
-        response_json = response.json()
-        if response.status_code != 200:
-            print(f"{red}Lỗi từ server: {response_json.get('message', 'Không xác định')}{e}")
-            quit()
-        return response_json
-    except Exception as e:
-        print(f"{red}Lỗi kết nối: {str(e)}{e}")
-        quit()
+        with open("Authorization.txt", "r") as f_auth, open("token.txt", "r") as f_token:
+            author = f_auth.read().strip()
+            token = f_token.read().strip()
+    except FileNotFoundError:
+        author = input(f"{colors['cyan']}Nhập Authorization: {colors['reset']}")
+        token = input(f"{colors['cyan']}Nhập Token: {colors['reset']}")
+        with open("Authorization.txt", "w") as f_auth, open("token.txt", "w") as f_token:
+            f_auth.write(author)
+            f_token.write(token)
+    return author, token
 
-def nhannv(account_id):
-    params = {'account_id': account_id, 'data': 'null'}
-    response = requests.get('https://gateway.golike.net/api/advertising/publishers/tiktok/jobs', params=params, headers=headers).json()
-    return response
+# Gửi yêu cầu danh sách tài khoản TikTok
+def fetch_accounts(headers):
+    url = "https://gateway.golike.net/api/tiktok-account"
+    response = requests.get(url, headers=headers)
+    return response.json()
 
-def hoanthanh(ads_id, account_id):
-    json_data = {
-        'ads_id': ads_id,
-        'account_id': account_id,
-        'async': True,
-        'data': None,
-    }
-    response = requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/complete-jobs', headers=headers, json=json_data).json()
-    return response
-
-def baoloi(ads_id, object_id, account_id, loai):
-    json_data1 = {
-        'description': 'Tôi đã làm Job này rồi',
-        'users_advertising_id': ads_id,
-        'type': 'ads',
-        'provider': 'tiktok',
-        'fb_id': account_id,
-        'error_type': 6,
-    }
-    requests.post('https://gateway.golike.net/api/report/send', headers=headers, json=json_data1)
-
-    json_data = {
-        'ads_id': ads_id,
-        'object_id': object_id,
-        'account_id': account_id,
-        'type': loai,
-    }
-    requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs', headers=headers, json=json_data)
-
-loat = int(input("Nhập delay (giây): "))
-thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
-chontktiktok = chonacc()
-
-# Hàm hiển thị danh sách tài khoản TikTok
-def dsacc():
-    if chontktiktok["status"] != 200:
-        print(f"{red}Authorization hoặc Token không hợp lệ!{e}")
-        quit()
-
+# Hiển thị danh sách tài khoản với PrettyTable
+def display_accounts(accounts):
     table = PrettyTable()
-    table.field_names = ["STT", "Tên Tài Khoản", "Trạng Thái"]
-    table.align = "l"
-
-    for i, account in enumerate(chontktiktok["data"], start=1):
-        nickname = account.get("nickname", "Chưa xác định")
-        status = "Hoạt động" if account.get("status") == "active" else "Không hoạt động"
-        nickname_colored = f"{vang}{nickname}{e}"
-        status_colored = f"{luc}{status}{e}" if status == "Hoạt động" else f"{red}{status}{e}"
-        table.add_row([f"{luc}{i}{e}", nickname_colored, status_colored])
-
-    print(f"{lam}Danh sách tài khoản TikTok:{e}")
+    table.field_names = ["STT", "Tên Tài Khoản", "ID"]
+    for index, acc in enumerate(accounts, start=1):
+        table.add_row([index, acc["nickname"], acc["id"]])
     print(table)
 
-dsacc()
+# Lấy nhiệm vụ từ API
+def fetch_job(headers, account_id):
+    url = "https://gateway.golike.net/api/advertising/publishers/tiktok/jobs"
+    params = {"account_id": account_id, "data": "null"}
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
 
-# Người dùng chọn tài khoản TikTok
-while True:
+# Hoàn thành nhiệm vụ
+def complete_job(headers, ads_id, account_id):
+    url = "https://gateway.golike.net/api/advertising/publishers/tiktok/complete-jobs"
+    data = {
+        "ads_id": ads_id,
+        "account_id": account_id,
+        "async": True,
+        "data": None,
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
+
+# Báo lỗi nhiệm vụ
+def report_job(headers, ads_id, object_id, account_id, job_type):
+    url = "https://gateway.golike.net/api/report/send"
+    data = {
+        "description": "Tôi đã làm Job này rồi",
+        "users_advertising_id": ads_id,
+        "type": "ads",
+        "provider": "tiktok",
+        "fb_id": account_id,
+        "error_type": 6,
+    }
+    requests.post(url, headers=headers, json=data)
+
+    url_skip = "https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs"
+    data_skip = {
+        "ads_id": ads_id,
+        "object_id": object_id,
+        "account_id": account_id,
+        "type": job_type,
+    }
+    requests.post(url_skip, headers=headers, json=data_skip)
+
+# Main logic
+def main():
+    display_banner()
+    author, token = get_credentials()
+    headers = {
+        "Authorization": author,
+        "t": token,
+        "User-Agent": "Mozilla/5.0",
+    }
+
+    accounts = fetch_accounts(headers)
+    if accounts.get("status") != 200:
+        print(f"{colors['red']}Authorization hoặc Token không hợp lệ!{colors['reset']}")
+        return
+
+    accounts_list = accounts["data"]
+    display_accounts(accounts_list)
+
     try:
-        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
-        while luachon > len(chontktiktok["data"]):
-            luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
-        account_id = chontktiktok["data"][luachon - 1]["id"]
-        break
-    except:
-        print(f"{red}Sai định dạng !{e}")
+        choice = int(input(f"{colors['yellow']}Chọn tài khoản để chạy: {colors['reset']}"))
+        account_id = accounts_list[choice - 1]["id"]
+    except (ValueError, IndexError):
+        print(f"{colors['red']}Lựa chọn không hợp lệ!{colors['reset']}")
+        return
 
-# Chạy nhiệm vụ
-dem = 0
-tong = 0
-checkdoiacc = 0
-dsaccloi = []
-
-while True:
-    if checkdoiacc == thay:
-        dsacc()
-        while True:
-            try:
-                luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
-                while luachon > len(chontktiktok["data"]):
-                    luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
-                account_id = chontktiktok["data"][luachon - 1]["id"]
-                checkdoiacc = 0
-                break
-            except:
-                print("Sai định dạng!")
-
-    nhanjob = nhannv(account_id)
-    if nhanjob["status"] == 200:
-        ads_id = nhanjob["data"]["id"]
-        link = nhanjob["data"]["link"]
-        object_id = nhanjob["data"]["object_id"]
-
-        if nhanjob["data"]["type"] != "follow":
-            baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
-            continue
-
-        os.system(f"termux-open-url {link}")
-        for i in range(loat, -1, -1):
-            print(f"Đang đợi {i}s...", end="\r")
-            sleep(1)
-
-        nhantien = hoanthanh(ads_id, account_id)
-        if nhantien["status"] == 200:
-            dem += 1
-            tien = nhantien["data"]["prices"]
-            tong += tien
-            print(f"{luc}{dem}. Nhận: {tien} - Tổng: {tong}{e}")
-            checkdoiacc = 0
+    delay = int(input(f"{colors['cyan']}Nhập delay (giây): {colors['reset']}"))
+    while True:
+        job = fetch_job(headers, account_id)
+        if job.get("status") == 200:
+            ads_id = job["data"]["id"]
+            link = job["data"]["link"]
+            os.system(f"termux-open-url {link}")
+            time.sleep(delay)
+            result = complete_job(headers, ads_id, account_id)
+            if result.get("status") == 200:
+                print(f"{colors['green']}Nhiệm vụ hoàn thành!{colors['reset']}")
+            else:
+                print(f"{colors['red']}Lỗi khi hoàn thành nhiệm vụ!{colors['reset']}")
         else:
-            baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
-            checkdoiacc += 1
+            print(f"{colors['yellow']}Không có nhiệm vụ nào khả dụng!{colors['reset']}")
+            time.sleep(10)
+
+if __name__ == "__main__":
+    main()
