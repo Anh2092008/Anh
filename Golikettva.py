@@ -1,5 +1,6 @@
 import requests, os, time
 from time import sleep
+from prettytable import PrettyTable  # Import PrettyTable
 
 # Màu sắc
 den = "\033[1;90m"
@@ -13,6 +14,7 @@ lam = "\033[1;36m"
 hong = "\033[1;95m"
 n = "\033[1;3m\033[1;38m"
 e = "\033[0m"
+
 # Kiểm tra hoặc tạo file lưu Authorization và token
 try:
     open("Authorization.txt", "x").close()
@@ -21,129 +23,38 @@ try:
 except:
     pass
 
-# Lựa chọn nhập Authorization
-#print(f"{luc}1.{trang} Sử dụng Authorization đã lưu")
-#print(f"{luc}2.{trang} Nhập Authorization mới")
-#choice = input(f"{vang}Nhập lựa chọn (1/2): {e}")
+# Headers and other functions here...
 
-#if choice == "1":
-   # try:
-        #with open("Authorization.txt", "r") as auth_file:
-            #author = auth_file.read().strip()
-        #with open("token.txt", "r") as token_file:
-            #token = token_file.read().strip()
-        #with open("cookie_linkedin.txt", "r") as cookie_file:
-            #cookie = cookie_file.read().strip()
-    #except:
-        #print(f"{red}Không tìm thấy Authorization hoặc Token đã lưu. Vui lòng nhập mới.{e}")
-        #choice = "2"
+# Define PrettyTable for displaying account information
+def print_accounts_table(data):
+    table = PrettyTable()
+    table.field_names = ["ID", "Nickname", "Status"]  # Table headers
 
-#if choice == "2":
-    #author = input("Nhập Authorization: ")
-    #token = input("Nhập T: ")
-    #COOKIELINK = input(f'Nhập Cookie Linkedin: ')
-    #with open("Authorization.txt", "w") as auth_file:
-        #auth_file.write(author)
-    #with open("token.txt", "w") as token_file:
-        #token_file.write(token)
-  #  with open("cookie_linkedin.txt", "w") as cookie_file:
-        #cookie_file.write(COOKIELINK)
+    for i, account in enumerate(data):
+        table.add_row([i + 1, account["nickname"], "Hoạt Động"])  # Add rows with account info
 
-headers = {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json;charset=utf-8',
-    'Authorization': author,
-    't': token,
-    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
-    'Referer': 'https://app.golike.net/account/manager/tiktok',
-}
-
-def chonacc():
-    response = requests.get('https://gateway.golike.net/api/tiktok-account', headers=headers).json()
-    return response
-
-def nhannv(account_id):
-    params = {'account_id': account_id, 'data': 'null'}
-    response = requests.get('https://gateway.golike.net/api/advertising/publishers/tiktok/jobs', params=params, headers=headers).json()
-    return response
-
-def hoanthanh(ads_id, account_id):
-    json_data = {
-        'ads_id': ads_id,
-        'account_id': account_id,
-        'async': True,
-        'data': None,
-    }
-    response = requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/complete-jobs', headers=headers, json=json_data).json()
-    return response
-
-def baoloi(ads_id, object_id, account_id, loai):
-    json_data1 = {
-        'description': 'Tôi đã làm Job này rồi',
-        'users_advertising_id': ads_id,
-        'type': 'ads',
-        'provider': 'tiktok',
-        'fb_id': account_id,
-        'error_type': 6,
-    }
-    requests.post('https://gateway.golike.net/api/report/send', headers=headers, json=json_data1)
-
-    json_data = {
-        'ads_id': ads_id,
-        'object_id': object_id,
-        'account_id': account_id,
-        'type': loai,
-    }
-    requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs', headers=headers, json=json_data)
-loat = int(input("Nhập delay (giây): "))
-thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
-# Lấy danh sách tài khoản TikTok
-chontktiktok = chonacc()
+    print(table)
 
 def dsacc():
     if chontktiktok["status"] != 200:
         print(f"{red}Authorization hoặc Token không hợp lệ!{e}")
         quit()
 
-    for i in range(len(chontktiktok["data"])):
-        print(f'\033[1;36m{i+1} {z3}Tên TK \033[1;30m :\033[1;38;5;196m {chontktiktok["data"][i]["nickname"]}')
-        print(f"{z3}Trạng Thái \033[1;30m: \033[1;38;5;46mHoạt Động")
+    print_accounts_table(chontktiktok["data"])  # Call the function to display accounts in a table format
 
 dsacc()
 
-# Người dùng chọn tài khoản TikTok
-while True:
-    try:
-        luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
-        while luachon > len(chontktiktok["data"]):
-            luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
-        account_id = chontktiktok["data"][luachon - 1]["id"]
-        break
-    except:
-        print(f"{red}Sai định dạng !{e}")
+# Other parts of the code...
 
-# Nhập thông số delay và số lần đổi tài khoản
-while True:
-    try:
-        delay = loat
-        break
-    except:
-        print(f"{red}Sai định dạng !{e}")
+# When checking errors, use PrettyTable to show job progress
+def print_job_status(dem, tien, tong):
+    table = PrettyTable()
+    table.field_names = ["Job #", "Amount Earned", "Total Earned"]  # Table headers
+    table.add_row([dem, tien, tong])  # Add job stats as a row
 
-while True:
-    try:
-        doiacc = thay
-        break
-    except:
-        print("Nhập một số hợp lệ!")
+    print(table)
 
-# Các biến khởi tạo
-dem = 0
-tong = 0
-checkdoiacc = 0
-dsaccloi = []
-
-# Chạy nhiệm vụ
+# Running the main task
 while True:
     if checkdoiacc == doiacc:
         dsaccloi.append(chontktiktok["data"][luachon - 1]["nickname"])
@@ -180,7 +91,7 @@ while True:
             dem += 1
             tien = nhantien["data"]["prices"]
             tong += tien
-            print (Colorate.Diagonal(Colors.cyan_to_green, f"{dem}   {tien}   {tong} "))
+            print_job_status(dem, tien, tong)  # Display the job status in a table
             checkdoiacc = 0
         else:
             baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
