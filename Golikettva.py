@@ -23,19 +23,43 @@ try:
 except:
     pass
 
-# Lựa chọn nhập Authorization
+# Đọc giá trị Authorization và token từ file
+try:
+    with open("Authorization.txt", "r") as auth_file:
+        authorization = auth_file.read().strip()
+    with open("token.txt", "r") as token_file:
+        token = token_file.read().strip()
+except FileNotFoundError:
+    print(f"{red}Không tìm thấy file Authorization.txt hoặc token.txt!{e}")
+    quit()
+
+# Kiểm tra giá trị Authorization và token
+if not authorization or not token:
+    print(f"{red}Authorization hoặc token không được để trống!{e}")
+    quit()
+
+# Headers cho request
 headers = {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json;charset=utf-8',
-    'Authorization': "",  # Thay bằng giá trị Authorization
-    't': "",  # Thay bằng giá trị token
+    'Authorization': authorization,
+    't': token,
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
     'Referer': 'https://app.golike.net/account/manager/tiktok',
 }
 
+# Lấy danh sách tài khoản TikTok
 def chonacc():
-    response = requests.get('https://gateway.golike.net/api/tiktok-account', headers=headers).json()
-    return response
+    try:
+        response = requests.get('https://gateway.golike.net/api/tiktok-account', headers=headers)
+        response_json = response.json()
+        if response.status_code != 200:
+            print(f"{red}Lỗi từ server: {response_json.get('message', 'Không xác định')}{e}")
+            quit()
+        return response_json
+    except Exception as e:
+        print(f"{red}Lỗi kết nối: {str(e)}{e}")
+        quit()
 
 def nhannv(account_id):
     params = {'account_id': account_id, 'data': 'null'}
@@ -73,7 +97,6 @@ def baoloi(ads_id, object_id, account_id, loai):
 
 loat = int(input("Nhập delay (giây): "))
 thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
-# Lấy danh sách tài khoản TikTok
 chontktiktok = chonacc()
 
 # Hàm hiển thị danh sách tài khoản TikTok
@@ -82,23 +105,17 @@ def dsacc():
         print(f"{red}Authorization hoặc Token không hợp lệ!{e}")
         quit()
 
-    # Tạo bảng sử dụng PrettyTable
     table = PrettyTable()
     table.field_names = ["STT", "Tên Tài Khoản", "Trạng Thái"]
     table.align = "l"
 
-    # Thêm dữ liệu vào bảng với định dạng màu sắc
     for i, account in enumerate(chontktiktok["data"], start=1):
         nickname = account.get("nickname", "Chưa xác định")
         status = "Hoạt động" if account.get("status") == "active" else "Không hoạt động"
-        
-        # Định dạng màu sắc cho tên tài khoản
         nickname_colored = f"{vang}{nickname}{e}"
         status_colored = f"{luc}{status}{e}" if status == "Hoạt động" else f"{red}{status}{e}"
-        
         table.add_row([f"{luc}{i}{e}", nickname_colored, status_colored])
 
-    # Hiển thị bảng
     print(f"{lam}Danh sách tài khoản TikTok:{e}")
     print(table)
 
@@ -115,17 +132,15 @@ while True:
     except:
         print(f"{red}Sai định dạng !{e}")
 
-# Các biến khởi tạo
+# Chạy nhiệm vụ
 dem = 0
 tong = 0
 checkdoiacc = 0
 dsaccloi = []
 
-# Chạy nhiệm vụ
 while True:
     if checkdoiacc == thay:
         dsacc()
-        # Lựa chọn tài khoản mới
         while True:
             try:
                 luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
