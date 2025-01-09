@@ -85,7 +85,7 @@ def dsacc():
     table = PrettyTable()
     table.field_names = [f"{cam}STT{e}", f"{cy}Tên Tài Khoản{e}", f"{vang}Trạng Thái{e}"]
     for i, acc in enumerate(chontktiktok["data"], start=1):
-        table.add_row([i, acc["nickname"], f"{xanh}Hoạt Động{e}"])
+        table.add_row([i, acc["nickname"], f"{luc}Hoạt Động"])
     print(table)
 
 dsacc()
