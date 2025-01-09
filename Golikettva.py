@@ -14,7 +14,8 @@ lam = "\033[1;36m"
 hong = "\033[1;95m"
 n = "\033[1;3m\033[1;38m"
 e = "\033[0m"
-
+cam="\033[1;38;5;202m"
+cy="\033[1;38;5;51m"
 # Kiểm tra hoặc tạo file lưu Authorization và token
 try:
     open("Authorization.txt", "x").close()
@@ -70,8 +71,8 @@ def baoloi(ads_id, object_id, account_id, loai):
     }
     requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs', headers=headers, json=json_data)
 
-loat = int(input("Nhập delay (giây): "))
-thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
+loat = int(input(f"{trang}Nhập delay (giây): "))
+thay = int(input(f"{trang}Nhập số lần lỗi để đổi tài khoản: "))
 # Lấy danh sách tài khoản TikTok
 chontktiktok = chonacc()
 
@@ -82,9 +83,9 @@ def dsacc():
 
     # Hiển thị danh sách tài khoản bằng PrettyTable
     table = PrettyTable()
-    table.field_names = ["STT", "Tên Tài Khoản", "Trạng Thái"]
+    table.field_names = [f"{cam}STT{e}", f"{cy}Tên Tài Khoản{e}", f"{vang}Trạng Thái{e}"]
     for i, acc in enumerate(chontktiktok["data"], start=1):
-        table.add_row([i, acc["nickname"], "Hoạt Động"])
+        table.add_row([f"{cam}"+i+f"{e}", acc["nickname"], f"{xanh}Hoạt Động{e}"])
     print(table)
 
 dsacc()
@@ -158,7 +159,7 @@ while True:
             dem += 1
             tien = nhantien["data"]["prices"]
             tong += tien
-            print(f"{dem}   {tien}   {tong}")
+            print (Colorate.Diagonal(Colors.cyan_to_green, f"{dem}   +{tien}   {tong}"))
             checkdoiacc = 0
         else:
             baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
