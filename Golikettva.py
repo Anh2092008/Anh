@@ -9,16 +9,13 @@ trang = "\033[1;37m"
 red = "\033[1;31m"
 vang = "\033[1;33m"
 tim = "\033[1;35m"
-lamd = "\033[1;34m"
 lam = "\033[1;36m"
-hong = "\033[1;95m"
 e = "\033[0m"
 
 # Kiểm tra hoặc tạo file lưu Authorization và token
 try:
     open("Authorization.txt", "x").close()
     open("token.txt", "x").close()
-    open("cookie_linkedin.txt", "x").close()
 except:
     pass
 
@@ -41,23 +38,56 @@ if not author or not token:
 headers = {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json;charset=utf-8',
-    'Authorization': author,  # Giá trị Authorization
-    't': token,  # Giá trị token
+    'Authorization': author,
+    't': token,
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
-    'Referer': 'https://app.golike.net/account/manager/tiktok',
 }
 
 # Hàm lấy danh sách tài khoản TikTok
 def chonacc():
     try:
         response = requests.get('https://gateway.golike.net/api/tiktok-account', headers=headers)
-        if response.status_code != 200:
-            print(f"{red}API trả về lỗi: {response.status_code}. Nội dung: {response.json()}{e}")
-            quit()
         return response.json()
     except Exception as ex:
         print(f"{red}Lỗi khi gọi API: {ex}{e}")
         quit()
+
+# Hàm nhận nhiệm vụ
+def nhannv(account_id):
+    params = {'account_id': account_id, 'data': 'null'}
+    response = requests.get('https://gateway.golike.net/api/advertising/publishers/tiktok/jobs', params=params, headers=headers).json()
+    return response
+
+# Hàm hoàn thành nhiệm vụ
+def hoanthanh(ads_id, account_id):
+    json_data = {
+        'ads_id': ads_id,
+        'account_id': account_id,
+        'async': True,
+        'data': None,
+    }
+    response = requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/complete-jobs', headers=headers, json=json_data).json()
+    return response
+
+# Hàm báo lỗi
+def baoloi(ads_id, object_id, account_id, loai):
+    json_data1 = {
+        'description': 'Tôi đã làm Job này rồi',
+        'users_advertising_id': ads_id,
+        'type': 'ads',
+        'provider': 'tiktok',
+        'fb_id': account_id,
+        'error_type': 6,
+    }
+    requests.post('https://gateway.golike.net/api/report/send', headers=headers, json=json_data1)
+
+    json_data = {
+        'ads_id': ads_id,
+        'object_id': object_id,
+        'account_id': account_id,
+        'type': loai,
+    }
+    requests.post('https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs', headers=headers, json=json_data)
 
 # Lấy danh sách tài khoản
 chontktiktok = chonacc()
@@ -68,23 +98,19 @@ def dsacc():
         print(f"{red}Authorization hoặc Token không hợp lệ!{e}")
         quit()
 
-    # Tạo bảng sử dụng PrettyTable
     table = PrettyTable()
     table.field_names = ["STT", "Tên Tài Khoản", "Trạng Thái"]
     table.align = "l"
 
-    # Thêm dữ liệu vào bảng với định dạng màu sắc
     for i, account in enumerate(chontktiktok["data"], start=1):
         nickname = account.get("nickname", "Chưa xác định")
         status = "Hoạt động" if account.get("status") == "active" else "Không hoạt động"
         
-        # Định dạng màu sắc cho tên tài khoản
         nickname_colored = f"{vang}{nickname}{e}"
         status_colored = f"{luc}{status}{e}" if status == "Hoạt động" else f"{red}{status}{e}"
         
         table.add_row([f"{luc}{i}{e}", nickname_colored, status_colored])
 
-    # Hiển thị bảng
     print(f"{lam}Danh sách tài khoản TikTok:{e}")
     print(table)
 
@@ -109,7 +135,6 @@ thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
 dem = 0
 tong = 0
 checkdoiacc = 0
-dsaccloi = []
 
 # Chạy nhiệm vụ
 while True:
@@ -132,10 +157,6 @@ while True:
         ads_id = nhanjob["data"]["id"]
         link = nhanjob["data"]["link"]
         object_id = nhanjob["data"]["object_id"]
-
-        if nhanjob["data"]["type"] != "follow":
-            baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
-            continue
 
         os.system(f"termux-open-url {link}")
         for i in range(loat, -1, -1):
