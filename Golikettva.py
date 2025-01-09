@@ -1,6 +1,6 @@
 import requests, os, time
 from time import sleep
-from prettytable import PrettyTable  # Thêm thư viện PrettyTable
+from prettytable import PrettyTable
 
 # Màu sắc
 den = "\033[1;90m"
@@ -14,6 +14,7 @@ lam = "\033[1;36m"
 hong = "\033[1;95m"
 n = "\033[1;3m\033[1;38m"
 e = "\033[0m"
+
 # Kiểm tra hoặc tạo file lưu Authorization và token
 try:
     open("Authorization.txt", "x").close()
@@ -23,38 +24,11 @@ except:
     pass
 
 # Lựa chọn nhập Authorization
-#print(f"{luc}1.{trang} Sử dụng Authorization đã lưu")
-#print(f"{luc}2.{trang} Nhập Authorization mới")
-#choice = input(f"{vang}Nhập lựa chọn (1/2): {e}")
-
-#if choice == "1":
-   # try:
-        #with open("Authorization.txt", "r") as auth_file:
-            #author = auth_file.read().strip()
-        #with open("token.txt", "r") as token_file:
-            #token = token_file.read().strip()
-        #with open("cookie_linkedin.txt", "r") as cookie_file:
-            #cookie = cookie_file.read().strip()
-    #except:
-        #print(f"{red}Không tìm thấy Authorization hoặc Token đã lưu. Vui lòng nhập mới.{e}")
-        #choice = "2"
-
-#if choice == "2":
-    #author = input("Nhập Authorization: ")
-    #token = input("Nhập T: ")
-    #COOKIELINK = input(f'Nhập Cookie Linkedin: ')
-    #with open("Authorization.txt", "w") as auth_file:
-        #auth_file.write(author)
-    #with open("token.txt", "w") as token_file:
-        #token_file.write(token)
-  #  with open("cookie_linkedin.txt", "w") as cookie_file:
-        #cookie_file.write(COOKIELINK)
-
 headers = {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json;charset=utf-8',
-    'Authorization': author,
-    't': token,
+    'Authorization': "",  # Thay bằng giá trị Authorization
+    't': "",  # Thay bằng giá trị token
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
     'Referer': 'https://app.golike.net/account/manager/tiktok',
 }
@@ -99,24 +73,33 @@ def baoloi(ads_id, object_id, account_id, loai):
 
 loat = int(input("Nhập delay (giây): "))
 thay = int(input("Nhập số lần lỗi để đổi tài khoản: "))
-
 # Lấy danh sách tài khoản TikTok
 chontktiktok = chonacc()
 
-# Hàm hiển thị danh sách tài khoản với PrettyTable
+# Hàm hiển thị danh sách tài khoản TikTok
 def dsacc():
     if chontktiktok["status"] != 200:
         print(f"{red}Authorization hoặc Token không hợp lệ!{e}")
         quit()
 
-    # Tạo bảng với PrettyTable
+    # Tạo bảng sử dụng PrettyTable
     table = PrettyTable()
-    table.field_names = ["STT", "Tên TK", "Trạng Thái"]
+    table.field_names = ["STT", "Tên Tài Khoản", "Trạng Thái"]
+    table.align = "l"
 
-    for i in range(len(chontktiktok["data"])):
-        table.add_row([i+1, chontktiktok["data"][i]["nickname"], "Hoạt Động"])
+    # Thêm dữ liệu vào bảng với định dạng màu sắc
+    for i, account in enumerate(chontktiktok["data"], start=1):
+        nickname = account.get("nickname", "Chưa xác định")
+        status = "Hoạt động" if account.get("status") == "active" else "Không hoạt động"
+        
+        # Định dạng màu sắc cho tên tài khoản
+        nickname_colored = f"{vang}{nickname}{e}"
+        status_colored = f"{luc}{status}{e}" if status == "Hoạt động" else f"{red}{status}{e}"
+        
+        table.add_row([f"{luc}{i}{e}", nickname_colored, status_colored])
 
-    # In bảng
+    # Hiển thị bảng
+    print(f"{lam}Danh sách tài khoản TikTok:{e}")
     print(table)
 
 dsacc()
@@ -132,21 +115,6 @@ while True:
     except:
         print(f"{red}Sai định dạng !{e}")
 
-# Nhập thông số delay và số lần đổi tài khoản
-while True:
-    try:
-        delay = loat
-        break
-    except:
-        print(f"{red}Sai định dạng !{e}")
-
-while True:
-    try:
-        doiacc = thay
-        break
-    except:
-        print("Nhập một số hợp lệ!")
-
 # Các biến khởi tạo
 dem = 0
 tong = 0
@@ -155,13 +123,12 @@ dsaccloi = []
 
 # Chạy nhiệm vụ
 while True:
-    if checkdoiacc == doiacc:
-        dsaccloi.append(chontktiktok["data"][luachon - 1]["nickname"])
-        print(f"Các tài khoản gặp lỗi: {dsaccloi}")
+    if checkdoiacc == thay:
         dsacc()
+        # Lựa chọn tài khoản mới
         while True:
             try:
-                luachon = int(input("Chọn tài khoản để chạy: "))
+                luachon = int(input(f"{vang}Chọn tài khoản để chạy: {e}"))
                 while luachon > len(chontktiktok["data"]):
                     luachon = int(input("Tài khoản không tồn tại. Hãy nhập lại: "))
                 account_id = chontktiktok["data"][luachon - 1]["id"]
@@ -181,7 +148,7 @@ while True:
             continue
 
         os.system(f"termux-open-url {link}")
-        for i in range(delay, -1, -1):
+        for i in range(loat, -1, -1):
             print(f"Đang đợi {i}s...", end="\r")
             sleep(1)
 
@@ -190,14 +157,8 @@ while True:
             dem += 1
             tien = nhantien["data"]["prices"]
             tong += tien
-            print(f"{dem}   {tien}   {tong}")
+            print(f"{luc}{dem}. Nhận: {tien} - Tổng: {tong}{e}")
             checkdoiacc = 0
         else:
             baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
             checkdoiacc += 1
-
-    # Menu after encountering an error
-    if checkdoiacc >= doiacc:
-        print(f"{red}Tài khoản {chontktiktok['data'][luachon - 1]['nickname']} đã gặp quá nhiều lỗi!{e}")
-        while True:
-            print(f"{trang}Nhập {luc}1 {trang}Đ
