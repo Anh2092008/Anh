@@ -34,6 +34,11 @@ chontktiktok = {
     ]
 }
 
+# Ensure chontktiktok is defined before usage
+if 'chontktiktok' not in globals():
+    print(f"{red}chontktiktok is not defined. Please check your data initialization!{e}")
+    quit()
+
 # Define PrettyTable for displaying account information
 def print_accounts_table(data):
     table = PrettyTable()
@@ -112,4 +117,5 @@ def main():
             checkdoiacc += 1  # Increment error count if something goes wrong
 
 # Running the main logic
-main()
+if __name__ == "__main__":
+    main()
