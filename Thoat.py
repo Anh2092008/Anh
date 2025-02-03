@@ -18,7 +18,7 @@ def fake_loading():
     print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")
     print(f"{trang}[+] Đang bắt đầu quá trình tải dữ liệu... Vui lòng đợi.")
 
-    for _ in range(10):  # 1 phút giả lập tải dữ liệu
+    for _ in range(30):  # 1 phút giả lập tải dữ liệu
         print(f"\r[+] Đang tải để vào tool ... {animations[_ % 4]}", end="", flush=True)
         time.sleep(1)
 
