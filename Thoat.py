@@ -5,7 +5,7 @@ import time
 import threading
 import warnings
 banner = f"""                         ╔════════════════╗
-                         ║ \033[1;37m TDS GOLIKE TT \033[1;90m║
+                         ║ \033[1;37m   GOLIKE TT   \033[1;90m║
                          ╚════════════════╝                           \n
 """
 # ANSI color codes for terminal output
@@ -26,7 +26,7 @@ def fake_loading():
     token = input(f'Nhập T : ')
     
 
-    for _ in range(10):  # Simulate loading for 10 seconds
+    for _ in range(20):  # Simulate loading for 10 seconds
         print(f"\r[+] Đang tải thông tin acc golike ... {animations[_ % 4]}", end="", flush=True)
         time.sleep(1)
 
